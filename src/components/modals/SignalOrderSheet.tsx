@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Signal } from "../../constants/signals";
 import { ACCOUNT, MAX_LEVERAGE, MIN_LEVERAGE } from "../../constants/defaults";
+import { useTranslation } from "../../i18n";
 import BottomSheet from "../common/BottomSheet";
 import type { CSSProperties } from "react";
 
@@ -33,6 +34,7 @@ const editInput: CSSProperties = {
 };
 
 export default function SignalOrderSheet({ signal, onExecute, onModify: _onModify, onClose }: Props) {
+  const { t } = useTranslation();
   const isLong = signal.direction === "LONG";
   const [editing, setEditing] = useState(false);
   const [leverage, setLeverage] = useState(signal.leverage);
@@ -50,7 +52,7 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
   };
 
   return (
-    <BottomSheet onClose={onClose} title="Signal Order Confirm">
+    <BottomSheet onClose={onClose} title={t("signal.orderConfirm")}>
       <div style={{ padding: "0 20px 20px" }}>
         {/* Signal summary */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
@@ -67,17 +69,17 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
         {/* Details */}
         <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-md)", padding: "12px 14px", marginBottom: "16px" }}>
           <div style={row}>
-            <span style={{ color: "var(--text-tertiary)" }}>Order Type</span>
-            <span>Limit</span>
+            <span style={{ color: "var(--text-tertiary)" }}>{t("signal.orderType")}</span>
+            <span>{t("trade.limit")}</span>
           </div>
           <div style={row}>
-            <span style={{ color: "var(--text-tertiary)" }}>Entry Price</span>
+            <span style={{ color: "var(--text-tertiary)" }}>{t("signal.entryPrice")}</span>
             <span style={{ fontFamily: "var(--font-mono)" }}>${signal.entryPrice.toLocaleString()}</span>
           </div>
 
           {/* Quantity — editable */}
           <div style={row}>
-            <span style={{ color: "var(--text-tertiary)" }}>Margin</span>
+            <span style={{ color: "var(--text-tertiary)" }}>{t("signal.margin")}</span>
             {editing ? (
               <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                 <input
@@ -90,13 +92,13 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
                 <span style={{ fontSize: "11px", color: "#666" }}>USDC</span>
               </div>
             ) : (
-              <span style={{ color: "var(--text-secondary)" }}>{quantity} {ACCOUNT.currency} based</span>
+              <span style={{ color: "var(--text-secondary)" }}>{t("signal.usdcBased", { amount: quantity, currency: ACCOUNT.currency })}</span>
             )}
           </div>
 
           {/* Leverage — editable */}
           <div style={row}>
-            <span style={{ color: "var(--text-tertiary)" }}>Leverage</span>
+            <span style={{ color: "var(--text-tertiary)" }}>{t("signal.leverage")}</span>
             {editing ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <button
@@ -169,7 +171,7 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
               border: editing ? "1px solid #00de0b" : "1px solid var(--border-color)",
             }}
           >
-            {editing ? "Done" : "Modify"}
+            {editing ? t("signal.done") : t("signal.modify")}
           </button>
           <button
             onClick={onExecute}
@@ -183,7 +185,7 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
               color: "#fff",
             }}
           >
-            Execute Order
+            {t("signal.executeOrder")}
           </button>
         </div>
       </div>

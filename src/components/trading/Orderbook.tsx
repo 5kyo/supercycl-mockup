@@ -1,4 +1,5 @@
 import { ASKS, BIDS, SPREAD_PRICE } from "../../constants/orderbook";
+import { useTranslation } from "../../i18n";
 import type { CSSProperties } from "react";
 
 const container: CSSProperties = {
@@ -33,14 +34,15 @@ const spreadRow: CSSProperties = {
 };
 
 export default function Orderbook() {
+  const { t } = useTranslation();
   const asks = [...ASKS].reverse().slice(0, 4);
   const bids = BIDS.slice(0, 4);
 
   return (
     <div style={container}>
       <div style={headerRow}>
-        <span>Price</span>
-        <span style={{ textAlign: "right" }}>Size</span>
+        <span>{t("orderbook.price")}</span>
+        <span style={{ textAlign: "right" }}>{t("orderbook.size")}</span>
       </div>
 
       {/* Asks (red) */}

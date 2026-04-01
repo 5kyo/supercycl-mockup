@@ -1,9 +1,11 @@
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 
 export default function LeverageNotice() {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
 
   if (state.hasSeenLeverageNotice) return null;
 
@@ -11,7 +13,7 @@ export default function LeverageNotice() {
     <Modal showClose={false}>
       <div style={{ textAlign: "center" }}>
         <div style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px" }}>
-          Leverage Policy Notice
+          {t("leverage.noticeTitle")}
         </div>
 
         <div style={{
@@ -23,14 +25,14 @@ export default function LeverageNotice() {
         </div>
 
         <p style={{ fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "24px" }}>
-          This account has a maximum leverage limit of <strong style={{ color: "var(--text-primary)" }}>2x</strong> under the user protection policy.
+          {t("leverage.noticeBody", { max: 2 })}
         </p>
 
         <Button
           fullWidth
           onClick={() => dispatch({ type: "DISMISS_LEVERAGE_NOTICE" })}
         >
-          I Understand
+          {t("leverage.understand")}
         </Button>
       </div>
     </Modal>

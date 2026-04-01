@@ -1,4 +1,6 @@
 import type { Signal } from "../../constants/signals";
+import { useTranslation } from "../../i18n";
+import type { TranslationKey } from "../../i18n";
 import type { CSSProperties } from "react";
 
 interface Props {
@@ -6,23 +8,20 @@ interface Props {
   readonly onExecute: (id: string) => void;
 }
 
-function relativeTime(timestamp: string): string {
-  const diff = Date.now() - new Date(timestamp).getTime();
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return "just now";
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  return `${Math.floor(hours / 24)}d ago`;
-}
-
 const isActive = (s: Signal) => s.status === "ACTIVE";
 
-const STATUS_LABEL: Record<string, { text: string; color: string }> = {
-  HIT_TP: { text: "HIT TP", color: "#00de0b" },
-  HIT_SL: { text: "HIT SL", color: "#ff5938" },
-  EXPIRED: { text: "EXPIRED", color: "#666" },
-  CANCELLED: { text: "CANCELLED", color: "#666" },
+const STATUS_COLOR: Record<string, string> = {
+  HIT_TP: "#00de0b",
+  HIT_SL: "#ff5938",
+  EXPIRED: "#666",
+  CANCELLED: "#666",
+};
+
+const STATUS_KEY: Record<string, TranslationKey> = {
+  HIT_TP: "signal.status.hitTp",
+  HIT_SL: "signal.status.hitSl",
+  EXPIRED: "signal.status.expired",
+  CANCELLED: "signal.status.cancelled",
 };
 
 const CONFIDENCE_COLOR: Record<string, string> = {
@@ -31,7 +30,24 @@ const CONFIDENCE_COLOR: Record<string, string> = {
   LOW: "#666",
 };
 
+const CONFIDENCE_KEY: Record<string, TranslationKey> = {
+  HIGH: "signal.confidence.high",
+  MEDIUM: "signal.confidence.med",
+  LOW: "signal.confidence.low",
+};
+
+function formatRelativeTime(timestamp: string, t: (key: TranslationKey, params?: Record<string, string | number>) => string): string {
+  const diff = Date.now() - new Date(timestamp).getTime();
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return t("time.justNow");
+  if (minutes < 60) return t("time.mAgo", { n: minutes });
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return t("time.hAgo", { n: hours });
+  return t("time.dAgo", { n: Math.floor(hours / 24) });
+}
+
 export default function SignalCard({ signal, onExecute }: Props) {
+  const { t } = useTranslation();
   const isLong = signal.direction === "LONG";
   const active = isActive(signal);
   const dirColor = isLong ? "#00de0b" : "#ff5938";
@@ -56,18 +72,18 @@ export default function SignalCard({ signal, onExecute }: Props) {
         <span style={{ fontSize: "13px", fontWeight: 700 }}>{signal.pair}</span>
         {active ? (
           <span style={{ fontSize: "11px", fontWeight: 600, color: dirColor }}>
-            {isLong ? "Long" : "Short"}
+            {isLong ? t("filter.long") : t("filter.short")}
           </span>
         ) : (
           <span style={{
             fontSize: "10px",
             fontWeight: 600,
-            color: STATUS_LABEL[signal.status]?.color,
+            color: STATUS_COLOR[signal.status],
             background: "rgba(255,255,255,0.05)",
             padding: "1px 4px",
             borderRadius: "2px",
           }}>
-            {STATUS_LABEL[signal.status]?.text}
+            {STATUS_KEY[signal.status] ? t(STATUS_KEY[signal.status]) : signal.status}
           </span>
         )}
         <span style={{
@@ -76,16 +92,16 @@ export default function SignalCard({ signal, onExecute }: Props) {
           color: CONFIDENCE_COLOR[signal.confidence],
           marginLeft: "auto",
         }}>
-          {signal.confidence === "HIGH" ? "High" : signal.confidence === "MEDIUM" ? "Med" : "Low"}
+          {CONFIDENCE_KEY[signal.confidence] ? t(CONFIDENCE_KEY[signal.confidence]) : signal.confidence}
         </span>
         <span style={{ fontSize: "10px", color: "#505050" }}>
-          {relativeTime(signal.timestamp)}
+          {formatRelativeTime(signal.timestamp, t)}
         </span>
       </div>
 
       {/* Data: Entry / TP / SL */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", marginTop: "6px" }}>
-        <span style={{ fontSize: "10px", color: "#666" }}>Entry</span>
+        <span style={{ fontSize: "10px", color: "#666" }}>{t("trade.entry")}</span>
         <span style={{ fontSize: "10px", color: "#666" }}>TP</span>
         <span style={{ fontSize: "10px", color: "#666" }}>SL</span>
       </div>
@@ -115,7 +131,7 @@ export default function SignalCard({ signal, onExecute }: Props) {
           marginTop: "4px",
           color: signal.pnlPercent >= 0 ? "#00de0b" : "#ff5938",
         }}>
-          Result: {signal.pnlPercent >= 0 ? "+" : ""}{signal.pnlPercent}%
+          {t("signal.result", { pnl: `${signal.pnlPercent >= 0 ? "+" : ""}${signal.pnlPercent}` })}
         </div>
       )}
 
@@ -136,7 +152,7 @@ export default function SignalCard({ signal, onExecute }: Props) {
             fontFamily: "var(--font-family)",
           }}
         >
-          Execute
+          {t("signal.execute")}
         </button>
       )}
     </div>

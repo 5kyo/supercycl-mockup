@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import Header from "../components/common/Header";
 import PlasmaOrb from "../components/canvas/PlasmaOrb";
+import { useTranslation } from "../i18n";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
@@ -32,6 +33,7 @@ export default function TermsPage() {
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useApp();
+  const { t } = useTranslation();
 
   const handleAccept = () => {
     if (!agreed) return;
@@ -49,7 +51,7 @@ export default function TermsPage() {
         lineHeight: "30px",
         padding: "28px 20px 0",
       }}>
-        Accept the Terms
+        {t("terms.title")}
       </p>
 
       <div style={{
@@ -81,10 +83,10 @@ export default function TermsPage() {
             )}
           </div>
           <span style={{ fontSize: "16px", lineHeight: "21px", color: "#9f9f9f" }}>
-            I agree to the{" "}
-            <a href="https://supercycl.io/terms" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>Terms of Service</a>
-            {" "}and{" "}
-            <a href="https://supercycl.io/policy" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>Privacy Policy</a>
+            {t("terms.agree")}
+            <a href="https://supercycl.io/terms" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>{t("terms.tos")}</a>
+            {t("terms.and")}
+            <a href="https://supercycl.io/policy" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>{t("terms.privacy")}</a>
           </span>
         </div>
 
@@ -107,7 +109,7 @@ export default function TermsPage() {
             transition: "opacity 0.15s",
           }}
         >
-          Accept
+          {t("terms.accept")}
         </button>
       </div>
     </div>

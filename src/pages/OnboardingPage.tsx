@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import PlasmaOrb from "../components/canvas/PlasmaOrb";
+import { useTranslation } from "../i18n";
 import { ACCOUNT } from "../constants/defaults";
 import type { CSSProperties } from "react";
 
@@ -14,10 +15,10 @@ const page: CSSProperties = {
   animation: "fadeIn 0.3s ease-out",
 };
 
-const steps = [
-  "Creating wallet",
-  "Connecting to Hyperliquid",
-  "Loading test funds",
+const stepKeys = [
+  "onboarding.step.wallet",
+  "onboarding.step.connect",
+  "onboarding.step.funds",
 ] as const;
 
 export default function OnboardingPage() {
@@ -25,6 +26,9 @@ export default function OnboardingPage() {
   const [completed, setCompleted] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useApp();
+  const { t } = useTranslation();
+
+  const steps = stepKeys.map((key) => t(key));
 
   useEffect(() => {
     const timers = [
@@ -77,7 +81,7 @@ export default function OnboardingPage() {
           textAlign: "center",
           marginTop: "36px",
         }}>
-          {completed ? "You're all set!" : <>Setting up your<br />trading account</>}
+          {completed ? t("onboarding.complete") : t("onboarding.settingUp").split("\n").map((line, i) => <span key={i}>{i > 0 && <br />}{line}</span>)}
         </p>
 
         {/* Steps */}
@@ -116,7 +120,7 @@ export default function OnboardingPage() {
             lineHeight: "18px",
             marginBottom: "16px",
           }}>
-            Test funds of <span style={{ color: "#00de0b", fontWeight: 500 }}>{ACCOUNT.balance} USDC</span> have been deposited.
+            {t("onboarding.deposited", { amount: ACCOUNT.balance })}
           </p>
 
           <div style={{
@@ -153,7 +157,7 @@ export default function OnboardingPage() {
             }} />
 
             <p style={{ fontSize: "14px", color: "#666", lineHeight: "18px" }}>
-              Balance
+              {t("onboarding.balance")}
             </p>
             <p style={{
               fontSize: "28px",
@@ -192,7 +196,7 @@ export default function OnboardingPage() {
             cursor: "pointer",
           }}
         >
-          Start Trading
+          {t("onboarding.startTrading")}
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useApp, type TabKey } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import type { CSSProperties, ReactNode } from "react";
 
 const nav: CSSProperties = {
@@ -69,11 +70,11 @@ const icons: Record<TabKey, (active: boolean) => ReactNode> = {
   settings: (a) => <SettingIcon active={a} />,
 };
 
-const labels: Record<TabKey, string> = {
-  trade: "Trade",
-  signal: "Signal",
-  portfolio: "Portfoilo",
-  settings: "Setting",
+const labelKeys: Record<TabKey, "nav.trade" | "nav.signal" | "nav.portfolio" | "nav.settings"> = {
+  trade: "nav.trade",
+  signal: "nav.signal",
+  portfolio: "nav.portfolio",
+  settings: "nav.settings",
 };
 
 const tabKeys: readonly TabKey[] = ["trade", "signal", "portfolio", "settings"];
@@ -84,6 +85,7 @@ interface Props {
 
 export default function BottomNav({ onTabChange }: Props) {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
 
   return (
     <div style={nav}>
@@ -111,7 +113,7 @@ export default function BottomNav({ onTabChange }: Props) {
             >
               {icons[key](active)}
               <span style={{ fontSize: "11px", fontWeight: active ? 500 : 400, marginTop: "2px" }}>
-                {labels[key]}
+                {t(labelKeys[key])}
               </span>
             </button>
           );

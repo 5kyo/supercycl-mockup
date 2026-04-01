@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import { COINS } from "../../constants/coins";
 import BottomSheet from "../common/BottomSheet";
 import type { CSSProperties } from "react";
@@ -31,6 +32,7 @@ interface Props {
 export default function CoinSelector({ onClose }: Props) {
   const [query, setQuery] = useState("");
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
 
   const filtered = COINS.filter((c) =>
     c.symbol.toLowerCase().includes(query.toLowerCase()) ||
@@ -38,11 +40,11 @@ export default function CoinSelector({ onClose }: Props) {
   );
 
   return (
-    <BottomSheet title="Select Coin" onClose={onClose}>
+    <BottomSheet title={t("coinSelector.title")} onClose={onClose}>
       <input
         style={searchInput}
         type="text"
-        placeholder="Search coins..."
+        placeholder={t("coinSelector.search")}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />

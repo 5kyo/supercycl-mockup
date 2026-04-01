@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import GoogleIcon from "../components/common/GoogleIcon";
 import PlasmaOrb from "../components/canvas/PlasmaOrb";
+import { useTranslation } from "../i18n";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
@@ -43,6 +44,7 @@ const ctaArea: CSSProperties = {
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div style={page}>
@@ -62,8 +64,8 @@ export default function LandingPage() {
           color: "#fff",
           animation: "fadeInUp 0.6s ease-out 0.15s both",
         }}>
-          Trade Different,<br />
-          Ride the <span style={{ color: "#00de0b" }}>Supercycl</span>
+          {t("landing.headline1")}<br />
+          {t("landing.headline2")}<span style={{ color: "#00de0b" }}>Supercycl</span>
         </h1>
       </div>
 
@@ -90,7 +92,7 @@ export default function LandingPage() {
           }}
         >
           <GoogleIcon />
-          Continue with Google
+          {t("landing.cta")}
         </button>
         <p style={{
           fontSize: "14px",
@@ -99,7 +101,7 @@ export default function LandingPage() {
           textAlign: "center",
           lineHeight: "18px",
         }}>
-          Test environment. No real funds used.
+          {t("landing.disclaimer")}
         </p>
       </div>
     </div>

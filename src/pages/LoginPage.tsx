@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import Header from "../components/common/Header";
+import { useTranslation } from "../i18n";
 import type { CSSProperties } from "react";
 import { asset } from "../utils/asset";
 
@@ -98,6 +99,7 @@ const ctaBtn: CSSProperties = {
 export default function LoginPage() {
   const navigate = useNavigate();
   const { dispatch } = useApp();
+  const { t } = useTranslation();
 
   const handleLogin = () => {
     dispatch({ type: "LOGIN" });
@@ -114,8 +116,8 @@ export default function LoginPage() {
 
       <div style={{ position: "absolute", left: "20px", top: "124px", width: "320px", zIndex: 1 }}>
         <h1 style={{ fontSize: "34px", fontWeight: 500, lineHeight: "36px", color: "#fff" }}>
-          Trade Different,<br />
-          Ride the <span style={{ color: "#00de0b" }}>Supercycl</span>
+          {t("landing.headline1")}<br />
+          {t("landing.headline2")}<span style={{ color: "#00de0b" }}>Supercycl</span>
         </h1>
       </div>
 
@@ -137,14 +139,14 @@ export default function LoginPage() {
           marginTop: "12px",
           fontFamily: "var(--font-kr)",
         }}>
-          Supercycl에 로그인
+          {t("login.title")}
         </p>
 
         <div style={accountCard}>
-          <div style={avatar}>김</div>
+          <div style={avatar}>{t("login.mockInitial")}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: "16px", fontWeight: 700, color: "#050505", fontFamily: "var(--font-kr)" }}>
-              홍길동
+              {t("login.mockName")}
             </div>
             <div style={{ fontSize: "14px", color: "#505050", marginTop: "2px" }}>
               text123@gmail.com
@@ -156,7 +158,7 @@ export default function LoginPage() {
         </div>
 
         <button style={ctaBtn} onClick={handleLogin}>
-          홍길동(으)로 계속
+          {t("login.continueAs", { name: t("login.mockName") })}
         </button>
       </div>
     </div>

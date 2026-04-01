@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import PositionCard from "./PositionCard";
 import type { CSSProperties } from "react";
 
@@ -23,16 +24,17 @@ const tabStyle = (active: boolean): CSSProperties => ({
 export default function Dashboard() {
   const [tab, setTab] = useState<Tab>("positions");
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
 
   const handleClose = useCallback((id: string) => {
     dispatch({ type: "CLOSE_POSITION", id });
-    dispatch({ type: "SHOW_TOAST", message: "Position closed" });
-  }, [dispatch]);
+    dispatch({ type: "SHOW_TOAST", message: t("trade.positionClosed") });
+  }, [dispatch, t]);
 
   return (
     <div style={container}>
       <div style={{ display: "flex", gap: "4px", borderBottom: "1px solid var(--border-color)", marginBottom: "12px" }}>
-        {([["positions", "Positions"], ["open", "Open Order"]] as const).map(([key, label]) => (
+        {([["positions", t("trade.positions")], ["open", t("trade.openOrder")]] as const).map(([key, label]) => (
           <button key={key} style={tabStyle(tab === key)} onClick={() => setTab(key as Tab)}>
             {label}
             {key === "positions" && state.positions.length > 0 && (
@@ -47,10 +49,10 @@ export default function Dashboard() {
       {tab === "positions" && (
         state.positions.length > 0
           ? state.positions.map((p) => <PositionCard key={p.id} position={p} onClose={handleClose} />)
-          : <Empty label="No open positions" />
+          : <Empty label={t("trade.noPositions")} />
       )}
 
-      {tab === "open" && <Empty label="No open orders" />}
+      {tab === "open" && <Empty label={t("trade.noOrders")} />}
     </div>
   );
 }

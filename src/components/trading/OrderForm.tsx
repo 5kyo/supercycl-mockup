@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import type { CSSProperties } from "react";
 
 const container: CSSProperties = {
@@ -62,6 +63,7 @@ interface Props {
 
 export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Props) {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
   const [price, setPrice] = useState(state.selectedCoin.price.toString());
   const [size, setSize] = useState("0.001");
   const [sizePercent, setSizePercent] = useState(50);
@@ -74,11 +76,11 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
 
   const handleOrder = (side: "Long" | "Short") => {
     dispatch({ type: "PLACE_ORDER", side });
-    const label = side === "Long" ? "Buy/Long" : "Sell/Short";
+    const label = side === "Long" ? t("trade.buyLong") : t("trade.sellShort");
     const tpslMsg = state.autoTpSlEnabled
       ? ` | Auto TP: +${state.takeProfitPercent}% / SL: -${state.stopLossPercent}%`
       : "";
-    dispatch({ type: "SHOW_TOAST", message: `${label} ${state.selectedCoin.symbol} order placed${tpslMsg}` });
+    dispatch({ type: "SHOW_TOAST", message: t("trade.orderPlaced", { label, symbol: state.selectedCoin.symbol, tpsl: tpslMsg }) });
     if (state.prefillData) {
       dispatch({ type: "CLEAR_PREFILL" });
     }
@@ -97,14 +99,14 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
           orderType: state.orderType === "market" ? "limit" : "market",
         })}
       >
-        <span>{state.orderType === "market" ? "Market" : "Limit"}</span>
+        <span>{state.orderType === "market" ? t("trade.market") : t("trade.limit")}</span>
         <Arrow />
       </div>
 
       {/* Isolated + Leverage row */}
       <div style={{ display: "flex", gap: "4px", marginBottom: "4px" }}>
         <div style={{ ...dropdown, flex: 1, height: "28px" }}>
-          <span>Isolated</span>
+          <span>{t("common.isolated")}</span>
         </div>
         <div style={{ ...dropdown, flex: "0 0 auto", height: "28px", minWidth: "68px" }} onClick={onLeverageTap}>
           <span>{state.leverage}x(Max)</span>
@@ -115,7 +117,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
       {/* Price input */}
       {state.orderType !== "market" && (
         <div style={{ ...inputBox, marginBottom: "4px" }}>
-          <span style={inputLabel}>Price (USDC)</span>
+          <span style={inputLabel}>{t("trade.priceUsdc")}</span>
           <input
             style={inputValue}
             type="text"
@@ -215,7 +217,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
             cursor: "pointer",
           }}
         >
-          Buy / Long
+          {t("trade.buyLong")}
         </button>
         <button
           onClick={() => handleOrder("Short")}
@@ -231,7 +233,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
             cursor: "pointer",
           }}
         >
-          Sell / Short
+          {t("trade.sellShort")}
         </button>
       </div>
     </div>

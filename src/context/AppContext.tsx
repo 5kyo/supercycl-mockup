@@ -3,6 +3,7 @@ import { type Position, DEFAULT_POSITIONS } from "../constants/positions";
 import { DEFAULT_COIN, COINS, type Coin } from "../constants/coins";
 import { DEFAULT_TP_PERCENT, DEFAULT_SL_PERCENT, DEFAULT_LEVERAGE } from "../constants/defaults";
 import { type SignalState, type SignalFilter, type SignalPrefill, INITIAL_SIGNAL_STATE } from "../constants/signals";
+import type { Language } from "../i18n/types";
 
 export type TabKey = "trade" | "signal" | "portfolio" | "settings";
 
@@ -26,6 +27,13 @@ export interface AppState {
 
   readonly signalState: SignalState;
   readonly prefillData: SignalPrefill | null;
+
+  readonly language: Language;
+}
+
+function getInitialLanguage(): Language {
+  const stored = localStorage.getItem("supercycl-language");
+  return stored === "ko" ? "ko" : "en";
 }
 
 const initialState: AppState = {
@@ -48,6 +56,8 @@ const initialState: AppState = {
 
   signalState: INITIAL_SIGNAL_STATE,
   prefillData: null,
+
+  language: getInitialLanguage(),
 };
 
 type Action =
@@ -70,6 +80,7 @@ type Action =
   | { type: "PREFILL_FROM_SIGNAL"; prefill: SignalPrefill }
   | { type: "CLEAR_PREFILL" }
   | { type: "CLOSE_POSITION"; id: string }
+  | { type: "SET_LANGUAGE"; language: Language }
 ;
 
 function reducer(state: AppState, action: Action): AppState {
@@ -191,6 +202,9 @@ function reducer(state: AppState, action: Action): AppState {
     }
     case "CLEAR_PREFILL":
       return { ...state, prefillData: null };
+    case "SET_LANGUAGE":
+      localStorage.setItem("supercycl-language", action.language);
+      return { ...state, language: action.language };
     default:
       return state;
   }

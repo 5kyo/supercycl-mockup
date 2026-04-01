@@ -1,4 +1,5 @@
 import { useApp } from "../context/AppContext";
+import { useTranslation } from "../i18n";
 import { ACCOUNT } from "../constants/defaults";
 import type { CSSProperties } from "react";
 
@@ -22,34 +23,35 @@ interface Props {
 
 export default function SettingsPage({ onTpSlEdit }: Props) {
   const { state, dispatch } = useApp();
+  const { t, language } = useTranslation();
 
   return (
     <div style={{ paddingBottom: "20px" }}>
       {/* Account */}
       <div style={section}>
-        <div style={sectionTitle}>Account</div>
+        <div style={sectionTitle}>{t("settings.account")}</div>
         <div style={{ fontSize: "14px", marginBottom: "6px" }}>{ACCOUNT.email}</div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontSize: "13px", color: "var(--text-secondary)", fontFamily: "var(--font-mono)" }}>
             {ACCOUNT.wallet}
           </span>
           <button
-            onClick={() => dispatch({ type: "SHOW_TOAST", message: "Address copied!" })}
+            onClick={() => dispatch({ type: "SHOW_TOAST", message: t("settings.addressCopied") })}
             style={{ background: "var(--bg-card)", padding: "3px 8px", borderRadius: "4px", fontSize: "10px", color: "var(--text-secondary)" }}
           >
-            Copy
+            {t("common.copy")}
           </button>
         </div>
       </div>
 
       {/* Trading Preferences */}
       <div style={section}>
-        <div style={sectionTitle}>Trading Preferences</div>
+        <div style={sectionTitle}>{t("settings.tradingPrefs")}</div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-          <span style={{ fontSize: "14px" }}>Auto TP/SL</span>
+          <span style={{ fontSize: "14px" }}>{t("settings.autoTpSl")}</span>
           <button onClick={onTpSlEdit} style={{ background: "none", color: "var(--color-pri-1)", fontSize: "13px", fontWeight: 600 }}>
-            Edit
+            {t("common.edit")}
           </button>
         </div>
 
@@ -81,19 +83,43 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
         </button>
       </div>
 
+      {/* Language */}
+      <div style={section}>
+        <div style={sectionTitle}>{t("settings.language")}</div>
+        <div style={{ display: "flex", gap: "8px" }}>
+          {(["en", "ko"] as const).map((lang) => (
+            <button
+              key={lang}
+              onClick={() => dispatch({ type: "SET_LANGUAGE", language: lang })}
+              style={{
+                flex: 1,
+                padding: "10px",
+                borderRadius: "var(--radius-full)",
+                fontSize: "13px",
+                fontWeight: 600,
+                background: language === lang ? "var(--color-pri-1)" : "var(--bg-input)",
+                color: language === lang ? "#0a0a0a" : "var(--text-secondary)",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              {lang === "en" ? "English" : "\ud55c\uad6d\uc5b4"}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Exchange Connection */}
       <div style={section}>
-        <div style={sectionTitle}>Exchange Connection</div>
+        <div style={sectionTitle}>{t("settings.exchange")}</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontSize: "14px" }}>Hyperliquid (Testnet)</span>
-          <span style={{ fontSize: "12px", color: "var(--accent-green)", fontWeight: 600 }}>Connected &#10003;</span>
+          <span style={{ fontSize: "12px", color: "var(--accent-green)", fontWeight: 600 }}>{t("settings.connected")}</span>
         </div>
 
         <div style={{ marginTop: "14px", padding: "12px", background: "var(--bg-input)", borderRadius: "var(--radius-sm)" }}>
-          <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "18px" }}>
-            PC 버전에서는 총 6개 거래소에서 거래가 가능합니다.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "8px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
             {["Binance", "BingX", "OKX", "Bybit"].map((name) => (
               <span key={name} style={{
                 fontSize: "11px",
@@ -112,7 +138,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
               color: "var(--accent-yellow)",
               padding: "4px 0 4px 4px",
             }}>
-              Coming Soon
+              {t("settings.comingSoon")}
             </span>
           </div>
         </div>
@@ -120,7 +146,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
 
       {/* About */}
       <div style={section}>
-        <div style={sectionTitle}>About</div>
+        <div style={sectionTitle}>{t("settings.about")}</div>
         <a
           href="https://supercycl.io/"
           target="_blank"
@@ -134,7 +160,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
             textDecoration: "none",
           }}
         >
-          <span>Supercycl Website</span>
+          <span>{t("settings.website")}</span>
           <span style={{ fontSize: "12px", color: "var(--text-tertiary)" }}>supercycl.io &#8599;</span>
         </a>
         <a
@@ -151,7 +177,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
             marginTop: "12px",
           }}
         >
-          <span>Docs</span>
+          <span>{t("settings.docs")}</span>
           <span style={{ fontSize: "12px", color: "var(--text-tertiary)" }}>gitbook &#8599;</span>
         </a>
       </div>
@@ -159,7 +185,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
       {/* Logout */}
       <div style={{ padding: "24px 16px" }}>
         <button
-          onClick={() => dispatch({ type: "SHOW_TOAST", message: "Logged out (mockup)" })}
+          onClick={() => dispatch({ type: "SHOW_TOAST", message: t("settings.loggedOut") })}
           style={{
             width: "100%",
             padding: "14px",
@@ -171,7 +197,7 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
             fontWeight: 600,
           }}
         >
-          Logout
+          {t("common.logout")}
         </button>
       </div>
     </div>

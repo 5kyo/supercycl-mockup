@@ -3,14 +3,15 @@ import { useApp } from "../context/AppContext";
 import { SIGNAL_STATS, type Signal, type SignalFilter } from "../constants/signals";
 import SignalCard from "../components/trading/SignalCard";
 import SignalOrderSheet from "../components/modals/SignalOrderSheet";
+import { useTranslation } from "../i18n";
 import type { CSSProperties } from "react";
 
-const FILTERS: readonly { key: SignalFilter; label: string }[] = [
-  { key: "ALL", label: "All" },
-  { key: "LONG", label: "Long" },
-  { key: "SHORT", label: "Short" },
-  { key: "ACTIVE", label: "Active" },
-  { key: "CLOSED", label: "Closed" },
+const FILTER_KEYS: readonly { key: SignalFilter; labelKey: "filter.all" | "filter.long" | "filter.short" | "filter.active" | "filter.closed" }[] = [
+  { key: "ALL", labelKey: "filter.all" },
+  { key: "LONG", labelKey: "filter.long" },
+  { key: "SHORT", labelKey: "filter.short" },
+  { key: "ACTIVE", labelKey: "filter.active" },
+  { key: "CLOSED", labelKey: "filter.closed" },
 ];
 
 const CLOSED_STATUSES = new Set(["HIT_TP", "HIT_SL", "EXPIRED", "CANCELLED"]);
@@ -65,6 +66,7 @@ const filterTab = (active: boolean): CSSProperties => ({
 
 export default function SignalPage() {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
   const { signals, filter } = state.signalState;
   const [sheetSignal, setSheetSignal] = useState<Signal | null>(null);
 
@@ -79,7 +81,7 @@ export default function SignalPage() {
   const handleSheetExecute = () => {
     if (!sheetSignal) return;
     dispatch({ type: "EXECUTE_SIGNAL_ORDER", signalId: sheetSignal.id });
-    dispatch({ type: "SHOW_TOAST", message: "Order executed from signal" });
+    dispatch({ type: "SHOW_TOAST", message: t("signal.orderExecuted") });
     setSheetSignal(null);
   };
 
@@ -104,34 +106,34 @@ export default function SignalPage() {
       {/* Performance Summary */}
       <div style={perfSection}>
         <p style={{ fontSize: "12px", fontWeight: 500, color: "#666" }}>
-          Last 30 days performance
+          {t("signal.performance")}
         </p>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginTop: "8px" }}>
           <div style={statsRow}>
             <div style={statItem}>
-              <span style={{ fontSize: "12px", fontWeight: 500, color: "#00de0b" }}>Hit</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#00de0b" }}>{t("signal.hit")}</span>
               <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.hitCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "12px", fontWeight: 500, color: "#ff5938" }}>Miss</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#ff5938" }}>{t("signal.miss")}</span>
               <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.missCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "12px", fontWeight: 500, color: "#666" }}>Expired</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#666" }}>{t("signal.expired")}</span>
               <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.expiredCount}</span>
             </div>
           </div>
 
           <div style={{ textAlign: "right", fontSize: "11px", lineHeight: "15px" }}>
             <div>
-              <span style={{ color: "#9f9f9f" }}>Avg PnL </span>
+              <span style={{ color: "#9f9f9f" }}>{t("signal.avgPnl")} </span>
               <span style={{ color: "#00de0b", fontWeight: 700 }}>+{SIGNAL_STATS.avgPnlPercent}%</span>
             </div>
             <div style={{ marginTop: "2px" }}>
-              <span style={{ color: "#9f9f9f" }}>Hit Rate </span>
+              <span style={{ color: "#9f9f9f" }}>{t("signal.hitRate")} </span>
               <span style={{ color: "#00de0b", fontWeight: 700 }}>{SIGNAL_STATS.hitRate}%</span>
             </div>
           </div>
@@ -140,7 +142,7 @@ export default function SignalPage() {
 
       {/* Filter Tabs */}
       <div style={{ display: "flex", padding: "0 16px 8px" }}>
-        {FILTERS.map(({ key, label }) => {
+        {FILTER_KEYS.map(({ key, labelKey }) => {
           const active = filter === key;
           return (
             <button
@@ -148,7 +150,7 @@ export default function SignalPage() {
               onClick={() => dispatch({ type: "SET_SIGNAL_FILTER", filter: key })}
               style={filterTab(active)}
             >
-              {label}
+              {t(labelKey)}
               {active && (
                 <div style={{
                   position: "absolute",
@@ -171,7 +173,7 @@ export default function SignalPage() {
         {filtered.length === 0 ? (
           <div style={{ textAlign: "center", padding: "40px 0" }}>
             <div style={{ fontSize: "14px", color: "#666" }}>
-              No signals matching this filter
+              {t("signal.noSignals")}
             </div>
           </div>
         ) : (

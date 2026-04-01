@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 import { asset } from "../../utils/asset";
+import { useTranslation } from "../../i18n";
 
 interface Props {
   readonly variant?: "default" | "close" | "none";
@@ -31,6 +32,7 @@ const closeStyle: CSSProperties = {
 
 export default function Header({ variant = "default", onClose }: Props) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (variant === "none") return null;
 
@@ -86,7 +88,7 @@ export default function Header({ variant = "default", onClose }: Props) {
           letterSpacing: "0.5px",
           paddingLeft: "2px",
         }}>
-          Testnet
+          {t("common.testnet")}
         </span>
       </div>
     </div>

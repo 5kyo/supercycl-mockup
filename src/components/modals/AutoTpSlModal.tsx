@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 import type { CSSProperties } from "react";
@@ -20,6 +21,7 @@ interface Props {
 
 export default function AutoTpSlModal({ onClose }: Props) {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
   const [tp, setTp] = useState(state.takeProfitPercent.toString());
   const [sl, setSl] = useState(state.stopLossPercent.toString());
 
@@ -33,10 +35,10 @@ export default function AutoTpSlModal({ onClose }: Props) {
   };
 
   return (
-    <Modal title="Auto TP/SL Settings" onClose={onClose}>
+    <Modal title={t("tpsl.title")} onClose={onClose}>
       <div style={{ marginBottom: "16px" }}>
         <label style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "6px", display: "block" }}>
-          Take Profit (%)
+          {t("tpsl.takeProfit")}
         </label>
         <div style={{ position: "relative" }}>
           <input
@@ -53,7 +55,7 @@ export default function AutoTpSlModal({ onClose }: Props) {
 
       <div style={{ marginBottom: "16px" }}>
         <label style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "6px", display: "block" }}>
-          Stop Loss (%)
+          {t("tpsl.stopLoss")}
         </label>
         <div style={{ position: "relative" }}>
           <input
@@ -69,12 +71,12 @@ export default function AutoTpSlModal({ onClose }: Props) {
       </div>
 
       <p style={{ fontSize: "11px", color: "var(--text-tertiary)", lineHeight: 1.5, marginBottom: "20px" }}>
-        Settings apply to new orders only. Existing positions will not be affected.
+        {t("tpsl.note")}
       </p>
 
       <div style={{ display: "flex", gap: "10px" }}>
-        <Button variant="secondary" fullWidth onClick={onClose}>Cancel</Button>
-        <Button fullWidth disabled={!isValid} onClick={handleConfirm}>Confirm</Button>
+        <Button variant="secondary" fullWidth onClick={onClose}>{t("common.cancel")}</Button>
+        <Button fullWidth disabled={!isValid} onClick={handleConfirm}>{t("common.confirm")}</Button>
       </div>
     </Modal>
   );

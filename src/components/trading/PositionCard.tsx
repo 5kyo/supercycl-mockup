@@ -1,4 +1,5 @@
 import type { Position } from "../../constants/positions";
+import { useTranslation } from "../../i18n";
 import type { CSSProperties } from "react";
 
 const card: CSSProperties = {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function PositionCard({ position, onClose }: Props) {
+  const { t } = useTranslation();
   const isLong = position.side === "Long";
   const sideColor = isLong ? "#00de0b" : "#ff5938";
   const isProfit = position.pnl >= 0;
@@ -40,7 +42,7 @@ export default function PositionCard({ position, onClose }: Props) {
             {position.coin}
           </span>
           <span style={{ fontSize: "10px", fontWeight: 600, color: sideColor }}>
-            {position.side} · {position.leverage}x · Isolated
+            {position.side} · {position.leverage}x · {t("common.isolated")}
           </span>
         </div>
         <button
@@ -57,13 +59,13 @@ export default function PositionCard({ position, onClose }: Props) {
             lineHeight: "16px",
           }}
         >
-          Close
+          {t("common.close")}
         </button>
       </div>
 
       {/* Row 2: Entry price */}
       <div style={{ fontSize: "10px", color: "#666", marginTop: "4px" }}>
-        Entry <span style={{ color: "#9f9f9f" }}>{position.entryPrice}</span>
+        {t("trade.entry")} <span style={{ color: "#9f9f9f" }}>{position.entryPrice}</span>
       </div>
 
       {/* Row 3: P&L + Size */}
@@ -100,7 +102,7 @@ export default function PositionCard({ position, onClose }: Props) {
             borderRadius: "2px",
             padding: "1px 4px",
           }}>
-            Auto
+            {t("trade.auto")}
           </span>
           {position.tp != null && (
             <span style={{ color: "#666" }}>

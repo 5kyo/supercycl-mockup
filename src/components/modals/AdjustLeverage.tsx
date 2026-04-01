@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
+import { useTranslation } from "../../i18n";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { MAX_LEVERAGE, MIN_LEVERAGE } from "../../constants/defaults";
@@ -10,6 +11,7 @@ interface Props {
 
 export default function AdjustLeverage({ onClose }: Props) {
   const { state, dispatch } = useApp();
+  const { t } = useTranslation();
   const [value, setValue] = useState(state.leverage);
 
   const handleConfirm = () => {
@@ -18,9 +20,9 @@ export default function AdjustLeverage({ onClose }: Props) {
   };
 
   return (
-    <Modal title="Adjust Leverage" onClose={onClose}>
+    <Modal title={t("leverage.title")} onClose={onClose}>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "8px" }}>
-        {state.selectedCoin.symbol}USDT Perp | Isolated
+        {state.selectedCoin.symbol}USDT Perp | {t("common.isolated")}
       </div>
 
       {/* Warning banner */}
@@ -40,7 +42,7 @@ export default function AdjustLeverage({ onClose }: Props) {
           <circle cx="8" cy="11" r="0.75" fill="#00de0b" />
         </svg>
         <span style={{ fontSize: "12px", color: "#00de0b" }}>
-          Max leverage limited to {MAX_LEVERAGE}x (User Protection)
+          {t("leverage.maxWarning", { max: MAX_LEVERAGE })}
         </span>
       </div>
 
@@ -78,8 +80,8 @@ export default function AdjustLeverage({ onClose }: Props) {
 
       {/* Buttons */}
       <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-        <Button variant="secondary" fullWidth onClick={onClose}>Cancel</Button>
-        <Button fullWidth onClick={handleConfirm}>Confirm</Button>
+        <Button variant="secondary" fullWidth onClick={onClose}>{t("common.cancel")}</Button>
+        <Button fullWidth onClick={handleConfirm}>{t("common.confirm")}</Button>
       </div>
     </Modal>
   );
