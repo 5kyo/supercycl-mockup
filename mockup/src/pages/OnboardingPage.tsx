@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
-import Header from "../components/common/Header";
-import Logo from "../components/common/Logo";
 import PlasmaOrb from "../components/canvas/PlasmaOrb";
 import { ACCOUNT } from "../constants/defaults";
 import type { CSSProperties } from "react";
@@ -41,88 +39,6 @@ export default function OnboardingPage() {
     return () => timers.forEach(clearTimeout);
   }, [dispatch]);
 
-  if (completed) {
-    return (
-      <div style={page}>
-        <Header variant="close" onClose={() => navigate("/trade")} />
-
-        <div style={{ textAlign: "center", marginTop: "52px" }}>
-          <Logo size={40} />
-        </div>
-
-        <p style={{
-          fontSize: "26px",
-          fontWeight: 500,
-          lineHeight: "30px",
-          textAlign: "center",
-          marginTop: "24px",
-        }}>
-          You're all set!
-        </p>
-
-        <div style={{
-          margin: "24px 20px 0",
-          background: "#1a1a1a",
-          borderRadius: "8px",
-          padding: "32px 0 36px",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}>
-          {/* Ticket notches */}
-          <div style={{
-            position: "absolute",
-            left: "-16px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            background: "#050505",
-          }} />
-          <div style={{
-            position: "absolute",
-            right: "-16px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            background: "#050505",
-          }} />
-
-          <p style={{ fontSize: "16px", color: "#666", lineHeight: "21px" }}>
-            Balance
-          </p>
-          <p style={{ fontSize: "22px", fontWeight: 500, lineHeight: "28px", marginTop: "8px" }}>
-            {ACCOUNT.balance.toLocaleString("en-US")} USDC
-          </p>
-        </div>
-
-        <div style={{ padding: "0 20px", marginTop: "auto", marginBottom: "40px" }}>
-          <button
-            onClick={() => navigate("/trade")}
-            style={{
-              width: "100%",
-              padding: "18px",
-              background: "rgba(5,5,5,0.6)",
-              border: "1px solid #666",
-              borderRadius: "32px",
-              backdropFilter: "blur(2px)",
-              color: "#fff",
-              fontSize: "16px",
-              fontWeight: 500,
-              fontFamily: "var(--font-family)",
-              cursor: "pointer",
-            }}
-          >
-            Start Trading
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div style={page}>
       <div style={{
@@ -131,18 +47,17 @@ export default function OnboardingPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: "0",
-        paddingBottom: "60px",
+        paddingBottom: "40px",
       }}>
-        {/* Orb with pulse + glow */}
+        {/* Orb — pulse stops on completion */}
         <div style={{
           position: "relative",
           width: "200px",
           height: "200px",
-          animation: "orbPulse 3s ease-in-out infinite",
+          animation: completed ? "none" : "orbPulse 3s ease-in-out infinite",
+          transition: "transform 0.6s ease-out",
         }}>
           <PlasmaOrb style={{ width: "200px", height: "200px" }} />
-          {/* Radial glow beneath */}
           <div style={{
             position: "absolute",
             left: "50%",
@@ -162,43 +77,158 @@ export default function OnboardingPage() {
           textAlign: "center",
           marginTop: "36px",
         }}>
-          Setting up your<br />trading account
+          {completed ? "You're all set!" : <>Setting up your<br />trading account</>}
         </p>
 
-        <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {/* Steps */}
+        <div style={{
+          marginTop: "28px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          height: "120px",
+        }}>
           {steps.map((label, i) => (
-            <StepDot key={label} label={label} active={currentStep === i} done={currentStep > i} isLast={i === steps.length - 1} />
+            <StepRow
+              key={label}
+              label={label}
+              active={currentStep === i}
+              done={currentStep > i}
+              visible={currentStep >= i}
+              isLast={i === steps.length - 1}
+            />
           ))}
         </div>
+
+        {/* Completed section — fades in below steps */}
+        <div style={{
+          width: "100%",
+          padding: "0 20px",
+          opacity: completed ? 1 : 0,
+          transform: completed ? "translateY(0)" : "translateY(16px)",
+          transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
+          pointerEvents: completed ? "auto" : "none",
+        }}>
+          <div style={{
+            background: "#1a1a1a",
+            borderRadius: "8px",
+            padding: "32px 0 36px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            {/* Ticket notches */}
+            <div style={{
+              position: "absolute",
+              left: "-16px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              background: "#050505",
+            }} />
+            <div style={{
+              position: "absolute",
+              right: "-16px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              background: "#050505",
+            }} />
+
+            <p style={{ fontSize: "16px", color: "#666", lineHeight: "21px" }}>
+              Balance
+            </p>
+            <p style={{ fontSize: "22px", fontWeight: 500, lineHeight: "28px", marginTop: "8px" }}>
+              {ACCOUNT.balance.toLocaleString("en-US")} USDC
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Start Trading button — fades in at bottom */}
+      <div style={{
+        padding: "0 20px 40px",
+        opacity: completed ? 1 : 0,
+        transform: completed ? "translateY(0)" : "translateY(16px)",
+        transition: "opacity 0.5s ease-out 0.15s, transform 0.5s ease-out 0.15s",
+        pointerEvents: completed ? "auto" : "none",
+      }}>
+        <button
+          onClick={() => navigate("/trade")}
+          style={{
+            width: "100%",
+            padding: "18px",
+            background: "rgba(5,5,5,0.6)",
+            border: "1px solid #666",
+            borderRadius: "32px",
+            backdropFilter: "blur(2px)",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: 500,
+            fontFamily: "var(--font-family)",
+            cursor: "pointer",
+          }}
+        >
+          Start Trading
+        </button>
       </div>
     </div>
   );
 }
 
-function StepDot({ label, active, done, isLast }: {
+function StepRow({ label, active, done, visible, isLast }: {
   readonly label: string;
   readonly active: boolean;
   readonly done: boolean;
+  readonly visible: boolean;
   readonly isLast: boolean;
 }) {
-  const dotColor = done || active ? "#00de0b" : "#666";
-  const textColor = done || active ? "#00de0b" : "#666";
+  const isGreen = done || active;
 
   return (
-    <div style={{ position: "relative" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 0" }}>
+    <div style={{
+      position: "relative",
+      opacity: visible ? 1 : 0,
+      transform: visible ? "translateY(0)" : "translateY(8px)",
+      transition: "opacity 0.4s ease-out, transform 0.4s ease-out",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 0" }}>
+        {/* Indicator */}
         <div style={{
-          width: "8px",
-          height: "8px",
-          borderRadius: "50%",
-          background: dotColor,
+          width: "16px",
+          height: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           flexShrink: 0,
-          transition: "background 0.3s",
-        }} />
+        }}>
+          {done ? (
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ animation: "scaleIn 0.25s ease-out" }}>
+              <circle cx="7" cy="7" r="7" fill="#00de0b" />
+              <path d="M4 7.2L6 9.2L10 5" stroke="#050505" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ) : active ? (
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ animation: "spin 0.8s linear infinite" }}>
+              <circle cx="8" cy="8" r="6.5" stroke="#333" strokeWidth="2" />
+              <path d="M8 1.5A6.5 6.5 0 0 1 14.5 8" stroke="#00de0b" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <div style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              background: "#666",
+            }} />
+          )}
+        </div>
         <span style={{
           fontSize: "16px",
           lineHeight: "21px",
-          color: textColor,
+          color: isGreen ? "#00de0b" : "#666",
           transition: "color 0.3s",
         }}>
           {label}
@@ -207,11 +237,12 @@ function StepDot({ label, active, done, isLast }: {
       {!isLast && (
         <div style={{
           position: "absolute",
-          left: "3.5px",
-          top: "27px",
+          left: "7.5px",
+          top: "28px",
           width: "1px",
           height: "12px",
-          borderLeft: "1px dashed #666",
+          borderLeft: `1px dashed ${done ? "#00de0b" : "#666"}`,
+          transition: "border-color 0.3s",
         }} />
       )}
     </div>
