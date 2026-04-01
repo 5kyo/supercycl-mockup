@@ -12,7 +12,6 @@ Crypto trading mobile mockup app (360px fixed-width, mobile-only).
 ## Commands
 
 ```bash
-cd mockup
 npm run dev       # Vite dev server
 npm run build     # tsc -b && vite build
 npm run lint      # ESLint

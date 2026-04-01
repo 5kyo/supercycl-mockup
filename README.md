@@ -18,8 +18,6 @@
 ## Getting Started
 
 ```bash
-cd mockup
-
 # Install dependencies
 npm install
 
@@ -36,21 +34,18 @@ npm run preview
 ## Project Structure
 
 ```
-mockup/
-├── src/
-│   ├── pages/            # Route-level page components
-│   ├── components/
-│   │   ├── common/       # Button, Modal, BottomSheet, Header, Toast
-│   │   ├── trading/      # Chart, OrderForm, Orderbook, Dashboard
-│   │   ├── modals/       # CoinSelector, AdjustLeverage, AutoTpSlModal
-│   │   ├── layout/       # BottomNav
-│   │   └── canvas/       # PlasmaOrb, WaveCanvas (WebGL)
-│   ├── context/          # AppContext (useReducer 상태 관리)
-│   ├── constants/        # 코인, 포지션, 시그널 등 목업 데이터
-│   ├── utils/            # asset() 경로 유틸
-│   └── styles/           # CSS variables, animations
-├── public/               # Static assets (SVG, PNG)
-└── index.html
+src/
+├── pages/            # Route-level page components
+├── components/
+│   ├── common/       # Button, Modal, BottomSheet, Header, Toast
+│   ├── trading/      # Chart, OrderForm, Orderbook, Dashboard
+│   ├── modals/       # CoinSelector, AdjustLeverage, AutoTpSlModal
+│   ├── layout/       # BottomNav
+│   └── canvas/       # PlasmaOrb, WaveCanvas (WebGL)
+├── context/          # AppContext (useReducer 상태 관리)
+├── constants/        # 코인, 포지션, 시그널 등 목업 데이터
+├── utils/            # asset() 경로 유틸
+└── styles/           # CSS variables, animations
 ```
 
 ## Features
@@ -68,5 +63,5 @@ mockup/
 
 ## Docs
 
-- [CLAUDE.md](./mockup/CLAUDE.md) — 프로젝트 컨벤션 및 개발 가이드
-- [DesignSystem.md](./mockup/DesignSystem.md) — 디자인 토큰 및 컴포넌트 패턴
+- [CLAUDE.md](./CLAUDE.md) — 프로젝트 컨벤션 및 개발 가이드
+- [DesignSystem.md](./DesignSystem.md) — 디자인 토큰 및 컴포넌트 패턴
