@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import GoogleIcon from "../components/common/GoogleIcon";
+import PlasmaOrb from "../components/canvas/PlasmaOrb";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
@@ -12,13 +13,13 @@ const page: CSSProperties = {
   overflow: "hidden",
 };
 
-const bgImage: CSSProperties = {
+const orbArea: CSSProperties = {
   position: "absolute",
-  left: 0,
-  top: "208px",
-  width: "100%",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "320px",
   height: "320px",
-  objectFit: "cover",
   pointerEvents: "none",
 };
 
@@ -45,7 +46,9 @@ export default function LandingPage() {
 
   return (
     <div style={page}>
-      <img src="/images/landing-bg.png" alt="" style={bgImage} />
+      <div style={orbArea}>
+        <PlasmaOrb />
+      </div>
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <Header />

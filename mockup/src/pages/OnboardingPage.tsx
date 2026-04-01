@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import Header from "../components/common/Header";
 import Logo from "../components/common/Logo";
+import PlasmaOrb from "../components/canvas/PlasmaOrb";
 import { ACCOUNT } from "../constants/defaults";
 import type { CSSProperties } from "react";
 
@@ -124,31 +125,51 @@ export default function OnboardingPage() {
 
   return (
     <div style={page}>
-      {/* No header, just status bar space */}
-      <div style={{ height: "32px" }} />
-
-      <div style={{ textAlign: "center", marginTop: "120px" }}>
-        <img
-          src="/images/onboarding-wallet.png"
-          alt=""
-          style={{ width: "120px", height: "120px", objectFit: "contain" }}
-        />
-      </div>
-
-      <p style={{
-        fontSize: "26px",
-        fontWeight: 500,
-        lineHeight: "30px",
-        textAlign: "center",
-        marginTop: "24px",
+      <div style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0",
+        paddingBottom: "60px",
       }}>
-        Setting up your<br />trading account
-      </p>
+        {/* Orb with pulse + glow */}
+        <div style={{
+          position: "relative",
+          width: "200px",
+          height: "200px",
+          animation: "orbPulse 3s ease-in-out infinite",
+        }}>
+          <PlasmaOrb style={{ width: "200px", height: "200px" }} />
+          {/* Radial glow beneath */}
+          <div style={{
+            position: "absolute",
+            left: "50%",
+            bottom: "-20px",
+            transform: "translateX(-50%)",
+            width: "160px",
+            height: "40px",
+            background: "radial-gradient(ellipse, rgba(0,222,11,0.25) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }} />
+        </div>
 
-      <div style={{ marginTop: "32px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {steps.map((label, i) => (
-          <StepDot key={label} label={label} active={currentStep === i} done={currentStep > i} isLast={i === steps.length - 1} />
-        ))}
+        <p style={{
+          fontSize: "26px",
+          fontWeight: 500,
+          lineHeight: "30px",
+          textAlign: "center",
+          marginTop: "36px",
+        }}>
+          Setting up your<br />trading account
+        </p>
+
+        <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          {steps.map((label, i) => (
+            <StepDot key={label} label={label} active={currentStep === i} done={currentStep > i} isLast={i === steps.length - 1} />
+          ))}
+        </div>
       </div>
     </div>
   );
