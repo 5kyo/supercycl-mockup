@@ -88,6 +88,34 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
           <span style={{ fontSize: "14px" }}>Hyperliquid (Testnet)</span>
           <span style={{ fontSize: "12px", color: "var(--accent-green)", fontWeight: 600 }}>Connected &#10003;</span>
         </div>
+
+        <div style={{ marginTop: "14px", padding: "12px", background: "var(--bg-input)", borderRadius: "var(--radius-sm)" }}>
+          <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "18px" }}>
+            PC 버전에서는 총 6개 거래소에서 거래가 가능합니다.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "8px" }}>
+            {["Binance", "BingX", "OKX", "Bybit"].map((name) => (
+              <span key={name} style={{
+                fontSize: "11px",
+                fontWeight: 500,
+                color: "var(--text-tertiary)",
+                background: "var(--bg-card)",
+                padding: "4px 10px",
+                borderRadius: "var(--radius-full)",
+              }}>
+                {name}
+              </span>
+            ))}
+            <span style={{
+              fontSize: "11px",
+              fontWeight: 500,
+              color: "var(--accent-yellow)",
+              padding: "4px 0 4px 4px",
+            }}>
+              Coming Soon
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* About */}
