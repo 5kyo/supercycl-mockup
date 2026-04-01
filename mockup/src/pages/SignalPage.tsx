@@ -27,7 +27,7 @@ function filterSignals(signals: readonly Signal[], filter: SignalFilter): readon
 }
 
 const perfSection: CSSProperties = {
-  padding: "16px 16px 12px",
+  padding: "12px 16px 8px",
 };
 
 const statsRow: CSSProperties = {
@@ -126,18 +126,18 @@ export default function SignalPage() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginTop: "8px" }}>
           <div style={statsRow}>
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500, color: "#00de0b" }}>Hit 💚</span>
-              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.hitCount}</span>
+              <span style={{ fontSize: "10px", fontWeight: 500, color: "#00de0b" }}>Hit</span>
+              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.hitCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500, color: "#ff5938" }}>Miss 💔</span>
-              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.missCount}</span>
+              <span style={{ fontSize: "10px", fontWeight: 500, color: "#ff5938" }}>Miss</span>
+              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.missCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500 }}>Expired 🩶</span>
-              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.expiredCount}</span>
+              <span style={{ fontSize: "10px", fontWeight: 500, color: "#666" }}>Expired</span>
+              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.expiredCount}</span>
             </div>
           </div>
 

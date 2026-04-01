@@ -17,125 +17,123 @@ function relativeTime(timestamp: string): string {
   return `${Math.floor(hours / 24)}d ago`;
 }
 
-function ConfidenceDots({ level, color }: { readonly level: Signal["confidence"]; readonly color: string }) {
-  const filled = level === "HIGH" ? 3 : level === "MEDIUM" ? 2 : 1;
-  return (
-    <div style={{ display: "flex", gap: "2px" }}>
-      {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          style={{
-            width: "6px",
-            height: "6px",
-            borderRadius: "3px",
-            background: i < filled ? color : "#363636",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 const isActive = (s: Signal) => s.status === "ACTIVE";
+
+const STATUS_LABEL: Record<string, { text: string; color: string }> = {
+  HIT_TP: { text: "HIT TP", color: "#00de0b" },
+  HIT_SL: { text: "HIT SL", color: "#ff5938" },
+  EXPIRED: { text: "EXPIRED", color: "#666" },
+  CANCELLED: { text: "CANCELLED", color: "#666" },
+};
+
+const CONFIDENCE_COLOR: Record<string, string> = {
+  HIGH: "#00de0b",
+  MEDIUM: "#c89b00",
+  LOW: "#666",
+};
 
 export default function SignalCard({ signal, onExecute, onModify }: Props) {
   const isLong = signal.direction === "LONG";
   const active = isActive(signal);
   const dirColor = isLong ? "#00de0b" : "#ff5938";
 
-  const statusLabel: Record<string, { text: string; color: string }> = {
-    HIT_TP: { text: "HIT TP", color: "#00de0b" },
-    HIT_SL: { text: "HIT SL", color: "#ff5938" },
-    EXPIRED: { text: "EXPIRED", color: "#666" },
-    CANCELLED: { text: "CANCELLED", color: "#666" },
-  };
-
   const card: CSSProperties = {
-    padding: "16px 0",
+    padding: "10px 0",
     borderBottom: "1px solid #2c2c2c",
     opacity: active ? 1 : 0.7,
-    animation: active ? "fadeInUp 0.3s ease-out" : undefined,
   };
 
   return (
     <div style={card}>
-      {/* Row 1: Color bar + Pair + Direction + Time */}
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+      {/* Header: bar + pair + direction/status + confidence + time */}
+      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
         <div style={{
-          width: "4px",
-          height: "16px",
+          width: "3px",
+          height: "14px",
           borderRadius: "2px",
           background: active ? dirColor : "#666",
           flexShrink: 0,
         }} />
-        <span style={{ fontSize: "14px", fontWeight: 600 }}>{signal.pair}</span>
+        <span style={{ fontSize: "12px", fontWeight: 700 }}>{signal.pair}</span>
         {active ? (
-          <span style={{ fontSize: "13px", fontWeight: 500, color: dirColor }}>
-            {signal.direction === "LONG" ? "Long" : "Short"}
+          <span style={{ fontSize: "10px", fontWeight: 600, color: dirColor }}>
+            {isLong ? "Long" : "Short"}
           </span>
         ) : (
-          <span style={{ fontSize: "10px", fontWeight: 600, color: statusLabel[signal.status]?.color }}>
-            {statusLabel[signal.status]?.text}
+          <span style={{
+            fontSize: "9px",
+            fontWeight: 600,
+            color: STATUS_LABEL[signal.status]?.color,
+            background: "rgba(255,255,255,0.05)",
+            padding: "1px 4px",
+            borderRadius: "2px",
+          }}>
+            {STATUS_LABEL[signal.status]?.text}
           </span>
         )}
-        <span style={{ marginLeft: "auto", fontSize: "9px", fontWeight: 500, color: "#505050" }}>
+        <span style={{
+          fontSize: "9px",
+          fontWeight: 500,
+          color: CONFIDENCE_COLOR[signal.confidence],
+          marginLeft: "auto",
+        }}>
+          {signal.confidence === "HIGH" ? "High" : signal.confidence === "MEDIUM" ? "Med" : "Low"}
+        </span>
+        <span style={{ fontSize: "9px", color: "#505050" }}>
           {relativeTime(signal.timestamp)}
         </span>
       </div>
 
-      {/* Row 2: Data grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 40px 40px", gap: "2px", marginBottom: "4px" }}>
-        <span style={{ fontSize: "10px", color: "#666" }}>Entry Price</span>
-        <span style={{ fontSize: "10px", color: "#666" }}>TP</span>
-        <span style={{ fontSize: "10px", color: "#666" }}>SL</span>
-        <span style={{ fontSize: "10px", color: "#666" }}>{signal.confidence === "HIGH" ? "High" : signal.confidence === "MEDIUM" ? "Medium" : "Low"}</span>
-        <span style={{ fontSize: "10px", color: "#666" }}>R:R</span>
+      {/* Data: Entry / TP / SL */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", marginTop: "6px" }}>
+        <span style={{ fontSize: "9px", color: "#666" }}>Entry</span>
+        <span style={{ fontSize: "9px", color: "#666" }}>TP</span>
+        <span style={{ fontSize: "9px", color: "#666" }}>SL</span>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 40px 40px", gap: "2px", marginBottom: "6px" }}>
-        <span style={{ fontSize: "12px", fontWeight: 500 }}>{signal.entryPrice}</span>
-        <span style={{ fontSize: "12px", fontWeight: 500, color: dirColor }}>{signal.targetPrice.toLocaleString()}</span>
-        <span style={{ fontSize: "12px", fontWeight: 500 }}>{signal.stopLoss.toLocaleString()}</span>
-        <ConfidenceDots level={signal.confidence} color={dirColor} />
-        <span style={{ fontSize: "12px", fontWeight: 500 }}>1:1.5</span>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px" }}>
+        <span style={{ fontSize: "11px", fontWeight: 500 }}>{signal.entryPrice.toLocaleString()}</span>
+        <span style={{ fontSize: "11px", fontWeight: 500, color: "#00de0b" }}>{signal.targetPrice.toLocaleString()}</span>
+        <span style={{ fontSize: "11px", fontWeight: 500, color: "#ff5938" }}>{signal.stopLoss.toLocaleString()}</span>
       </div>
 
-      {/* Row 3: Reasoning */}
+      {/* Reasoning */}
       <p style={{
-        fontSize: "10px",
-        color: "#363636",
-        marginBottom: active ? "10px" : "0",
+        fontSize: "9px",
+        color: "#505050",
+        marginTop: "4px",
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
       }}>
-        "{signal.reasoning}"
+        {signal.reasoning}
       </p>
 
-      {/* Closed signal PnL */}
+      {/* Closed result */}
       {!active && signal.pnlPercent !== undefined && (
         <div style={{
-          fontSize: "13px",
+          fontSize: "11px",
           fontWeight: 600,
-          marginTop: "6px",
+          marginTop: "4px",
           color: signal.pnlPercent >= 0 ? "#00de0b" : "#ff5938",
         }}>
           Result: {signal.pnlPercent >= 0 ? "+" : ""}{signal.pnlPercent}%
         </div>
       )}
 
-      {/* CTA for active signals */}
+      {/* CTA */}
       {active && (
-        <div style={{ display: "flex", gap: "4px" }}>
+        <div style={{ display: "flex", gap: "4px", marginTop: "8px" }}>
           <button
             onClick={() => onModify(signal.id)}
             style={{
-              flex: 1,
-              height: "26px",
+              flex: "0 0 60px",
+              height: "28px",
               fontSize: "10px",
               fontWeight: 500,
-              borderRadius: "2px",
-              background: "#242424",
-              color: "#e0e0e0",
+              borderRadius: "3px",
+              background: "#1d1d1d",
+              border: "1px solid #363636",
+              color: "#9f9f9f",
               cursor: "pointer",
               fontFamily: "var(--font-family)",
             }}
@@ -146,17 +144,17 @@ export default function SignalCard({ signal, onExecute, onModify }: Props) {
             onClick={() => onExecute(signal.id)}
             style={{
               flex: 1,
-              height: "26px",
+              height: "28px",
               fontSize: "10px",
-              fontWeight: 500,
-              borderRadius: "2px",
+              fontWeight: 600,
+              borderRadius: "3px",
               background: dirColor,
               color: "#151515",
               cursor: "pointer",
               fontFamily: "var(--font-family)",
             }}
           >
-            Execute Signal
+            Execute
           </button>
         </div>
       )}
