@@ -1,73 +1,78 @@
-# React + TypeScript + Vite
+# Supercycl Mockup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+크립토 트레이딩 모바일 목업 앱 (360px, mobile-only)
 
-Currently, two official plugins are available:
+**Live Demo**: https://5kyo.github.io/supercycl-mockup/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+| Category | Technology |
+|----------|-----------|
+| Framework | React 19 |
+| Language | TypeScript 5.9 |
+| Build | Vite 8 |
+| Routing | React Router DOM 7 |
+| 3D/WebGL | Three.js |
+| Deploy | GitHub Pages |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+```bash
+# Install dependencies
+npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Start dev server
+npm run dev
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Production build
+npm run build
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Preview production build
+npm run preview
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Lint
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── pages/                # Route-level page components
+│   ├── LandingPage.tsx       # 랜딩 (PlasmaOrb 3D 효과)
+│   ├── LoginPage.tsx         # 구글 로그인 목업
+│   ├── TermsPage.tsx         # 이용약관
+│   ├── OnboardingPage.tsx    # 온보딩 (지갑 설정)
+│   ├── TradingPage.tsx       # 메인 트레이딩 (탭 기반)
+│   ├── SignalPage.tsx        # AI 시그널
+│   ├── PortfolioPage.tsx     # 포트폴리오
+│   └── SettingsPage.tsx      # 설정
+├── components/
+│   ├── common/           # Button, Modal, BottomSheet, Header, Toast, Logo
+│   ├── trading/          # Chart, OrderForm, Orderbook, Dashboard, PositionCard
+│   ├── modals/           # CoinSelector, AdjustLeverage, AutoTpSlModal
+│   ├── layout/           # BottomNav
+│   └── canvas/           # PlasmaOrb, WaveCanvas (WebGL)
+├── context/              # AppContext (useReducer 상태 관리)
+├── constants/            # 코인, 포지션, 시그널 등 목업 데이터
+├── utils/                # asset() 경로 유틸
+└── styles/               # CSS variables, animations
+```
+
+## Features
+
+- **Landing**: Three.js 기반 PlasmaOrb 3D 비주얼
+- **Trading**: 캔들 차트, 주문폼 (지정가/시장가/조건부), 오더북, 포지션 관리
+- **Signal**: AI 트레이딩 시그널 목록, 원클릭 주문 실행
+- **Portfolio**: 보유 포지션 요약, 총 자산/PnL
+- **Auto TP/SL**: 자동 익절/손절 설정
+- **Dark Theme**: #050505 기반 다크 모드
+
+## Deployment
+
+`main` 브랜치에 push하면 GitHub Actions가 자동으로 빌드 및 GitHub Pages에 배포합니다.
+
+## Docs
+
+- [CLAUDE.md](./CLAUDE.md) — 프로젝트 컨벤션 및 개발 가이드
+- [DesignSystem.md](./DesignSystem.md) — 디자인 토큰 및 컴포넌트 패턴
