@@ -8,7 +8,7 @@ import TradingPage from "./pages/TradingPage";
 export default function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/supercycl-mockup">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
