@@ -49,7 +49,7 @@ export default function TermsPage() {
         lineHeight: "30px",
         padding: "28px 20px 0",
       }}>
-        Review and accept<br />the terms
+        Accept the Terms
       </p>
 
       <div style={{
