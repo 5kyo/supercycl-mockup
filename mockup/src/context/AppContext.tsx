@@ -70,7 +70,7 @@ type Action =
   | { type: "PREFILL_FROM_SIGNAL"; prefill: SignalPrefill }
   | { type: "CLEAR_PREFILL" }
   | { type: "CLOSE_POSITION"; id: string }
-  | { type: "JUMP_TO_SCENARIO"; overrides: Partial<AppState> };
+;
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -191,15 +191,6 @@ function reducer(state: AppState, action: Action): AppState {
     }
     case "CLEAR_PREFILL":
       return { ...state, prefillData: null };
-    case "JUMP_TO_SCENARIO":
-      return {
-        ...initialState,
-        ...action.overrides,
-        signalState: {
-          ...initialState.signalState,
-          ...(action.overrides.signalState ?? {}),
-        },
-      };
     default:
       return state;
   }

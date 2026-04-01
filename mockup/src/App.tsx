@@ -5,13 +5,10 @@ import LoginPage from "./pages/LoginPage";
 import TermsPage from "./pages/TermsPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import TradingPage from "./pages/TradingPage";
-import DevNav from "./components/dev/DevNav";
-
 export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-        <DevNav />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
