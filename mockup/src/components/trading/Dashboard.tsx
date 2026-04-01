@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useApp } from "../../context/AppContext";
 import PositionCard from "./PositionCard";
 import type { CSSProperties } from "react";
@@ -22,12 +22,17 @@ const tabStyle = (active: boolean): CSSProperties => ({
 
 export default function Dashboard() {
   const [tab, setTab] = useState<Tab>("positions");
-  const { state } = useApp();
+  const { state, dispatch } = useApp();
+
+  const handleClose = useCallback((id: string) => {
+    dispatch({ type: "CLOSE_POSITION", id });
+    dispatch({ type: "SHOW_TOAST", message: "Position closed" });
+  }, [dispatch]);
 
   return (
     <div style={container}>
       <div style={{ display: "flex", gap: "4px", borderBottom: "1px solid var(--border-color)", marginBottom: "12px" }}>
-        {([["positions", "Positions"], ["open", "Open Orders"], ["history", "History"]] as const).map(([key, label]) => (
+        {([["positions", "Positions"], ["open", "Open Order"], ["history", "Order history"]] as const).map(([key, label]) => (
           <button key={key} style={tabStyle(tab === key)} onClick={() => setTab(key as Tab)}>
             {label}
             {key === "positions" && state.positions.length > 0 && (
@@ -41,7 +46,7 @@ export default function Dashboard() {
 
       {tab === "positions" && (
         state.positions.length > 0
-          ? state.positions.map((p) => <PositionCard key={p.id} position={p} />)
+          ? state.positions.map((p) => <PositionCard key={p.id} position={p} onClose={handleClose} />)
           : <Empty label="No open positions" />
       )}
 

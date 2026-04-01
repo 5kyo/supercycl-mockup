@@ -57,7 +57,7 @@ export default function OnboardingPage() {
           animation: completed ? "none" : "orbPulse 3s ease-in-out infinite",
           transition: "transform 0.6s ease-out",
         }}>
-          <PlasmaOrb style={{ width: "200px", height: "200px" }} />
+          <PlasmaOrb style={{ width: "200px", height: "200px" }} variant={completed ? "green" : "warm"} />
           <div style={{
             position: "absolute",
             left: "50%",
@@ -109,10 +109,21 @@ export default function OnboardingPage() {
           transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
           pointerEvents: completed ? "auto" : "none",
         }}>
+          <p style={{
+            fontSize: "14px",
+            color: "#9f9f9f",
+            textAlign: "center",
+            lineHeight: "18px",
+            marginBottom: "16px",
+          }}>
+            Test funds of <span style={{ color: "#00de0b", fontWeight: 500 }}>{ACCOUNT.balance} USDC</span> have been deposited.
+          </p>
+
           <div style={{
-            background: "#1a1a1a",
-            borderRadius: "8px",
-            padding: "32px 0 36px",
+            background: "#151515",
+            border: "1px solid #2c2c2c",
+            borderRadius: "12px",
+            padding: "28px 20px",
             textAlign: "center",
             position: "relative",
             overflow: "hidden",
@@ -120,30 +131,38 @@ export default function OnboardingPage() {
             {/* Ticket notches */}
             <div style={{
               position: "absolute",
-              left: "-16px",
+              left: "-14px",
               top: "50%",
               transform: "translateY(-50%)",
-              width: "32px",
-              height: "32px",
+              width: "28px",
+              height: "28px",
               borderRadius: "50%",
               background: "#050505",
+              border: "1px solid #2c2c2c",
             }} />
             <div style={{
               position: "absolute",
-              right: "-16px",
+              right: "-14px",
               top: "50%",
               transform: "translateY(-50%)",
-              width: "32px",
-              height: "32px",
+              width: "28px",
+              height: "28px",
               borderRadius: "50%",
               background: "#050505",
+              border: "1px solid #2c2c2c",
             }} />
 
-            <p style={{ fontSize: "16px", color: "#666", lineHeight: "21px" }}>
+            <p style={{ fontSize: "14px", color: "#666", lineHeight: "18px" }}>
               Balance
             </p>
-            <p style={{ fontSize: "22px", fontWeight: 500, lineHeight: "28px", marginTop: "8px" }}>
-              {ACCOUNT.balance.toLocaleString("en-US")} USDC
+            <p style={{
+              fontSize: "28px",
+              fontWeight: 600,
+              lineHeight: "34px",
+              marginTop: "8px",
+              color: "#fff",
+            }}>
+              {ACCOUNT.balance.toLocaleString("en-US")} <span style={{ fontSize: "16px", color: "#9f9f9f", fontWeight: 400 }}>USDC</span>
             </p>
           </div>
         </div>

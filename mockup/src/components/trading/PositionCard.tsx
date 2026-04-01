@@ -3,81 +3,115 @@ import type { CSSProperties } from "react";
 
 const card: CSSProperties = {
   background: "var(--bg-card)",
-  borderRadius: "var(--radius-md)",
-  padding: "14px",
-  marginBottom: "8px",
-};
-
-const row: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  borderRadius: "4px",
+  padding: "10px 12px 10px 14px",
   marginBottom: "6px",
+  position: "relative",
+  overflow: "hidden",
 };
 
 interface Props {
   readonly position: Position;
+  readonly onClose: (id: string) => void;
 }
 
-export default function PositionCard({ position }: Props) {
+export default function PositionCard({ position, onClose }: Props) {
+  const isLong = position.side === "Long";
+  const sideColor = isLong ? "#00de0b" : "#ff5938";
   const isProfit = position.pnl >= 0;
+  const pnlColor = isProfit ? "#00de0b" : "#ff5938";
 
   return (
-    <div style={{
-      ...card,
-      borderLeft: `3px solid ${isProfit ? "var(--accent-green)" : "var(--accent-red)"}`,
-    }}>
-      <div style={row}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "14px", fontWeight: 600 }}>{position.coin}</span>
-          <span style={{
+    <div style={card}>
+      {/* Left color bar */}
+      <div style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: "3px",
+        background: sideColor,
+      }} />
+
+      {/* Row 1: Header + Close */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontSize: "12px", fontWeight: 700, color: "#fff" }}>
+            {position.coin}
+          </span>
+          <span style={{ fontSize: "10px", fontWeight: 600, color: sideColor }}>
+            {position.side} · {position.leverage}x · Isolated
+          </span>
+        </div>
+        <button
+          onClick={() => onClose(position.id)}
+          style={{
             fontSize: "10px",
             fontWeight: 600,
-            padding: "2px 6px",
+            color: "#9f9f9f",
+            background: "#1d1d1d",
+            border: "1px solid #363636",
             borderRadius: "3px",
-            background: position.side === "Long" ? "rgba(0,214,143,0.15)" : "rgba(255,77,106,0.15)",
-            color: position.side === "Long" ? "var(--accent-green)" : "var(--accent-red)",
-          }}>
-            {position.side}
-          </span>
-          {position.isAuto && (
-            <span style={{
-              fontSize: "9px",
-              fontWeight: 700,
-              padding: "2px 5px",
-              borderRadius: "3px",
-              background: "rgba(0,255,106,0.1)",
-              color: "var(--color-pri-1)",
-            }}>
-              Auto
-            </span>
-          )}
-        </div>
-        <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+            padding: "2px 8px",
+            cursor: "pointer",
+            lineHeight: "16px",
+          }}
+        >
+          Close
+        </button>
+      </div>
+
+      {/* Row 2: Entry price */}
+      <div style={{ fontSize: "10px", color: "#666", marginTop: "4px" }}>
+        Entry <span style={{ color: "#9f9f9f" }}>{position.entryPrice}</span>
+      </div>
+
+      {/* Row 3: P&L + Size */}
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: "4px",
+      }}>
+        <span style={{ fontSize: "12px", fontWeight: 600, color: pnlColor }}>
+          {isProfit ? "+" : ""}{position.pnl} ({isProfit ? "+" : ""}{position.pnlPercent}%)
+        </span>
+        <span style={{ fontSize: "10px", color: "#666" }}>
           {position.size} {position.sizeUnit}
         </span>
       </div>
 
-      <div style={{ display: "flex", gap: "16px", fontSize: "11px", color: "var(--text-tertiary)", marginBottom: "6px" }}>
-        <span>Entry: ${position.entryPrice.toLocaleString()}</span>
-        <span>Mark: ${position.markPrice.toLocaleString()}</span>
-      </div>
-
-      <div style={row}>
-        <span style={{
-          fontSize: "14px",
-          fontWeight: 600,
-          color: isProfit ? "var(--accent-green)" : "var(--accent-red)",
+      {/* Row 4: TP/SL (if Auto) */}
+      {position.isAuto && (position.tp || position.sl) && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          marginTop: "6px",
+          paddingTop: "6px",
+          borderTop: "1px solid #2c2c2c",
+          fontSize: "10px",
         }}>
-          {isProfit ? "+" : ""}${position.pnl.toFixed(2)} ({isProfit ? "+" : ""}{position.pnlPercent}%)
-        </span>
-      </div>
-
-      {(position.tp || position.sl) && (
-        <div style={{ fontSize: "11px", color: "var(--text-tertiary)", borderTop: "1px solid var(--border-color)", paddingTop: "6px", marginTop: "4px" }}>
-          {position.tp && <span>TP: ${position.tp.toLocaleString()}</span>}
-          {position.tp && position.sl && <span> / </span>}
-          {position.sl && <span>SL: ${position.sl.toLocaleString()}</span>}
+          <span style={{
+            fontSize: "9px",
+            fontWeight: 700,
+            color: "#00de0b",
+            background: "rgba(0,222,11,0.1)",
+            borderRadius: "2px",
+            padding: "1px 4px",
+          }}>
+            Auto
+          </span>
+          {position.tp != null && (
+            <span style={{ color: "#666" }}>
+              TP <span style={{ color: "#00de0b" }}>{position.tp.toLocaleString()}</span>
+            </span>
+          )}
+          {position.sl != null && (
+            <span style={{ color: "#666" }}>
+              SL <span style={{ color: "#ff5938" }}>{position.sl.toLocaleString()}</span>
+            </span>
+          )}
         </div>
       )}
     </div>

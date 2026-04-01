@@ -14,11 +14,6 @@ import {
 const PLASMA_SCALE = 0.1404;
 const PLASMA_BRIGHTNESS = 1.31;
 const VOID_THRESHOLD = 0.072;
-const COLOR_DEEP = 0x041a00;
-const COLOR_MID = 0x00de0b;
-const COLOR_BRIGHT = 0x37ff00;
-const SHELL_COLOR = 0x00de0b;
-const SHELL_BACK_COLOR = 0x002900;
 const SHELL_OPACITY = 0.41;
 const SHELL_BACK_OPACITY = 0.3;
 const TIME_SCALE = 0.78;
@@ -27,17 +22,52 @@ const ROTATION_SPEED_Y = 0.005;
 const PARTICLE_COUNT = 600;
 const SPHERE_RADIUS = 0.95;
 const CAMERA_Z = 2.4;
+const COLOR_LERP_SPEED = 1.5; // per second
+
+type OrbVariant = "green" | "warm";
+
+interface ColorTheme {
+  readonly deep: THREE.Color;
+  readonly mid: THREE.Color;
+  readonly bright: THREE.Color;
+  readonly shell: THREE.Color;
+  readonly shellBack: THREE.Color;
+  readonly light: THREE.Color;
+  readonly particle: THREE.Color;
+}
+
+const THEMES: Record<OrbVariant, ColorTheme> = {
+  green: {
+    deep: new THREE.Color(0x041a00),
+    mid: new THREE.Color(0x00de0b),
+    bright: new THREE.Color(0x37ff00),
+    shell: new THREE.Color(0x00de0b),
+    shellBack: new THREE.Color(0x002900),
+    light: new THREE.Color(0x00de0b),
+    particle: new THREE.Color(0xffffff),
+  },
+  warm: {
+    deep: new THREE.Color(0x1a1000),
+    mid: new THREE.Color(0xc89b00),
+    bright: new THREE.Color(0xf0d060),
+    shell: new THREE.Color(0xc89b00),
+    shellBack: new THREE.Color(0x291e00),
+    light: new THREE.Color(0xc89b00),
+    particle: new THREE.Color(0xfff0c0),
+  },
+};
 
 interface Props {
   readonly style?: CSSProperties;
+  readonly variant?: OrbVariant;
 }
 
-function createShellMaterials(): readonly [THREE.ShaderMaterial, THREE.ShaderMaterial] {
+function createShellMaterials(theme: ColorTheme): readonly [THREE.ShaderMaterial, THREE.ShaderMaterial] {
   const back = new THREE.ShaderMaterial({
     vertexShader: SHELL_VERTEX,
     fragmentShader: SHELL_FRAGMENT,
     uniforms: {
-      uColor: { value: new THREE.Color(SHELL_BACK_COLOR) },
+      uColor: { value: theme.shellBack.clone() },
       uOpacity: { value: SHELL_BACK_OPACITY },
     },
     transparent: true,
@@ -50,7 +80,7 @@ function createShellMaterials(): readonly [THREE.ShaderMaterial, THREE.ShaderMat
     vertexShader: SHELL_VERTEX,
     fragmentShader: SHELL_FRAGMENT,
     uniforms: {
-      uColor: { value: new THREE.Color(SHELL_COLOR) },
+      uColor: { value: theme.shell.clone() },
       uOpacity: { value: SHELL_OPACITY },
     },
     transparent: true,
@@ -62,16 +92,16 @@ function createShellMaterials(): readonly [THREE.ShaderMaterial, THREE.ShaderMat
   return [back, front] as const;
 }
 
-function createPlasmaMaterial(): THREE.ShaderMaterial {
+function createPlasmaMaterial(theme: ColorTheme): THREE.ShaderMaterial {
   return new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0 },
       uScale: { value: PLASMA_SCALE },
       uBrightness: { value: PLASMA_BRIGHTNESS },
       uThreshold: { value: VOID_THRESHOLD },
-      uColorDeep: { value: new THREE.Color(COLOR_DEEP) },
-      uColorMid: { value: new THREE.Color(COLOR_MID) },
-      uColorBright: { value: new THREE.Color(COLOR_BRIGHT) },
+      uColorDeep: { value: theme.deep.clone() },
+      uColorMid: { value: theme.mid.clone() },
+      uColorBright: { value: theme.bright.clone() },
     },
     vertexShader: PLASMA_VERTEX,
     fragmentShader: PLASMA_FRAGMENT,
@@ -82,7 +112,7 @@ function createPlasmaMaterial(): THREE.ShaderMaterial {
   });
 }
 
-function createParticles(): { geometry: THREE.BufferGeometry; material: THREE.ShaderMaterial } {
+function createParticles(theme: ColorTheme): { geometry: THREE.BufferGeometry; material: THREE.ShaderMaterial } {
   const positions = new Float32Array(PARTICLE_COUNT * 3);
   const sizes = new Float32Array(PARTICLE_COUNT);
 
@@ -104,7 +134,7 @@ function createParticles(): { geometry: THREE.BufferGeometry; material: THREE.Sh
   const material = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0 },
-      uColor: { value: new THREE.Color(0xffffff) },
+      uColor: { value: theme.particle.clone() },
     },
     vertexShader: PARTICLE_VERTEX,
     fragmentShader: PARTICLE_FRAGMENT,
@@ -116,41 +146,51 @@ function createParticles(): { geometry: THREE.BufferGeometry; material: THREE.Sh
   return { geometry, material };
 }
 
-function buildScene(scene: THREE.Scene) {
+function buildScene(scene: THREE.Scene, theme: ColorTheme) {
   const group = new THREE.Group();
   scene.add(group);
 
-  const light = new THREE.PointLight(0x00de0b, 2.0, 10);
+  const light = new THREE.PointLight(theme.light.getHex(), 2.0, 10);
   group.add(light);
 
   // Shell
   const shellGeo = new THREE.SphereGeometry(1.0, 64, 64);
-  const [shellBack, shellFront] = createShellMaterials();
+  const [shellBack, shellFront] = createShellMaterials(theme);
   group.add(new THREE.Mesh(shellGeo, shellBack));
   group.add(new THREE.Mesh(shellGeo, shellFront));
 
   // Plasma
   const plasmaGeo = new THREE.SphereGeometry(0.998, 128, 128);
-  const plasmaMat = createPlasmaMaterial();
+  const plasmaMat = createPlasmaMaterial(theme);
   const plasmaMesh = new THREE.Mesh(plasmaGeo, plasmaMat);
   group.add(plasmaMesh);
 
   // Particles
-  const { geometry: particleGeo, material: particleMat } = createParticles();
+  const { geometry: particleGeo, material: particleMat } = createParticles(theme);
   group.add(new THREE.Points(particleGeo, particleMat));
 
   const geometries = [shellGeo, plasmaGeo, particleGeo];
   const materials = [shellBack, shellFront, plasmaMat, particleMat];
 
-  return { group, plasmaMesh, plasmaMat, particleMat, geometries, materials };
+  return { group, light, plasmaMesh, shellBack, shellFront, plasmaMat, particleMat, geometries, materials };
 }
 
-export default function PlasmaOrb({ style }: Props) {
+function lerpColor(current: THREE.Color, target: THREE.Color, alpha: number): void {
+  current.r += (target.r - current.r) * alpha;
+  current.g += (target.g - current.g) * alpha;
+  current.b += (target.b - current.b) * alpha;
+}
+
+export default function PlasmaOrb({ style, variant = "green" }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const variantRef = useRef<OrbVariant>(variant);
+  variantRef.current = variant;
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    const initialTheme = THEMES[variantRef.current];
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
@@ -164,8 +204,8 @@ export default function PlasmaOrb({ style }: Props) {
     container.appendChild(renderer.domElement);
     renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
 
-    const { group, plasmaMesh, plasmaMat, particleMat, geometries, materials } =
-      buildScene(scene);
+    const { group, light, plasmaMesh, shellBack, shellFront, plasmaMat, particleMat, geometries, materials } =
+      buildScene(scene, initialTheme);
 
     // Resize
     const observer = new ResizeObserver((entries) => {
@@ -187,7 +227,20 @@ export default function PlasmaOrb({ style }: Props) {
     function animate() {
       if (disposed) return;
       animId = requestAnimationFrame(animate);
+      const dt = clock.getDelta();
       const t = clock.getElapsedTime();
+
+      // Lerp colors toward target theme
+      const target = THEMES[variantRef.current];
+      const alpha = Math.min(1, dt * COLOR_LERP_SPEED);
+
+      lerpColor(plasmaMat.uniforms.uColorDeep.value, target.deep, alpha);
+      lerpColor(plasmaMat.uniforms.uColorMid.value, target.mid, alpha);
+      lerpColor(plasmaMat.uniforms.uColorBright.value, target.bright, alpha);
+      lerpColor(shellFront.uniforms.uColor.value, target.shell, alpha);
+      lerpColor(shellBack.uniforms.uColor.value, target.shellBack, alpha);
+      lerpColor(particleMat.uniforms.uColor.value, target.particle, alpha);
+      lerpColor(light.color, target.light, alpha);
 
       plasmaMat.uniforms.uTime.value = t * TIME_SCALE;
       particleMat.uniforms.uTime.value = t;

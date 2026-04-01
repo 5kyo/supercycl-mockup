@@ -69,6 +69,7 @@ type Action =
   | { type: "EXECUTE_SIGNAL_ORDER"; signalId: string }
   | { type: "PREFILL_FROM_SIGNAL"; prefill: SignalPrefill }
   | { type: "CLEAR_PREFILL" }
+  | { type: "CLOSE_POSITION"; id: string }
   | { type: "JUMP_TO_SCENARIO"; overrides: Partial<AppState> };
 
 function reducer(state: AppState, action: Action): AppState {
@@ -106,12 +107,16 @@ function reducer(state: AppState, action: Action): AppState {
         id: `pos-${Date.now()}`,
         coin: `${coin.symbol}USDT`,
         side: action.side,
+        leverage: state.leverage,
         size: 0.01,
         sizeUnit: coin.symbol,
+        margin: Math.round(entryPrice * 0.01 / state.leverage * 100) / 100,
         entryPrice,
         markPrice,
+        liqPrice: Math.round(entryPrice * (1 - pnlSign * 0.5 / state.leverage) * 100) / 100,
         pnl: pnlAmount,
         pnlPercent: Math.round((pnlAmount / entryPrice) * 10000) / 100,
+        unrealizedPnl: pnlAmount,
         tp: state.autoTpSlEnabled
           ? Math.round(entryPrice * (1 + (pnlSign * state.takeProfitPercent) / 100) * 100) / 100
           : null,
@@ -122,6 +127,8 @@ function reducer(state: AppState, action: Action): AppState {
       };
       return { ...state, positions: [...state.positions, newPosition] };
     }
+    case "CLOSE_POSITION":
+      return { ...state, positions: state.positions.filter((p) => p.id !== action.id) };
     case "SET_TAB":
       return { ...state, activeTab: action.tab };
     case "SHOW_TOAST":

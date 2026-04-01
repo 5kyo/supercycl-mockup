@@ -25,8 +25,8 @@ export default function AdjustLeverage({ onClose }: Props) {
 
       {/* Warning banner */}
       <div style={{
-        background: "rgba(240,185,11,0.1)",
-        border: "1px solid rgba(240,185,11,0.3)",
+        background: "rgba(0,222,11,0.06)",
+        border: "1px solid rgba(0,222,11,0.2)",
         borderRadius: "var(--radius-sm)",
         padding: "10px 14px",
         marginBottom: "20px",
@@ -34,9 +34,13 @@ export default function AdjustLeverage({ onClose }: Props) {
         alignItems: "center",
         gap: "8px",
       }}>
-        <span style={{ fontSize: "16px" }}>&#9888;</span>
-        <span style={{ fontSize: "12px", color: "var(--accent-yellow)" }}>
-          Max leverage limited to 2x (User Protection)
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="7" stroke="#00de0b" strokeWidth="1.5" />
+          <path d="M8 4.5V8.5" stroke="#00de0b" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="8" cy="11" r="0.75" fill="#00de0b" />
+        </svg>
+        <span style={{ fontSize: "12px", color: "#00de0b" }}>
+          Max leverage limited to {MAX_LEVERAGE}x (User Protection)
         </span>
       </div>
 
@@ -45,6 +49,7 @@ export default function AdjustLeverage({ onClose }: Props) {
         <div style={{
           display: "inline-block",
           background: "var(--bg-input)",
+          border: "1px solid var(--border-color)",
           borderRadius: "var(--radius-md)",
           padding: "12px 32px",
           fontSize: "28px",
@@ -63,7 +68,7 @@ export default function AdjustLeverage({ onClose }: Props) {
           step={1}
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
-          style={{ width: "100%", accentColor: "var(--accent-yellow)" }}
+          style={{ width: "100%", accentColor: "#00de0b" }}
         />
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "var(--text-tertiary)" }}>
           <span>{MIN_LEVERAGE}x</span>

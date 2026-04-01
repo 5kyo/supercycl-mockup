@@ -18,6 +18,7 @@ const dropdown: CSSProperties = {
   fontWeight: 600,
   color: "#e0e0e0",
   cursor: "pointer",
+  boxSizing: "border-box",
 };
 
 const inputBox: CSSProperties = {
@@ -26,6 +27,7 @@ const inputBox: CSSProperties = {
   padding: "0 10px",
   height: "30px",
   position: "relative",
+  boxSizing: "border-box",
 };
 
 const inputLabel: CSSProperties = {
@@ -42,7 +44,8 @@ const inputValue: CSSProperties = {
   border: "none",
   outline: "none",
   fontFamily: "var(--font-family)",
-  width: "100%",
+  width: 0,
+  minWidth: 0,
   padding: 0,
 };
 
@@ -60,7 +63,7 @@ interface Props {
 export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Props) {
   const { state, dispatch } = useApp();
   const [price, setPrice] = useState(state.selectedCoin.price.toString());
-  const [size, setSize] = useState("611,000,000");
+  const [size, setSize] = useState("0.001");
   const [sizePercent, setSizePercent] = useState(50);
 
   useEffect(() => {
@@ -86,19 +89,24 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
 
   return (
     <div style={container}>
-      {/* Market dropdown */}
-      <div style={{ ...dropdown, width: "190px", height: "28px", marginBottom: "4px" }}>
-        <span>Market</span>
+      {/* Order type toggle */}
+      <div
+        style={{ ...dropdown, height: "28px", marginBottom: "4px" }}
+        onClick={() => dispatch({
+          type: "SET_ORDER_TYPE",
+          orderType: state.orderType === "market" ? "limit" : "market",
+        })}
+      >
+        <span>{state.orderType === "market" ? "Market" : "Limit"}</span>
         <Arrow />
       </div>
 
       {/* Isolated + Leverage row */}
       <div style={{ display: "flex", gap: "4px", marginBottom: "4px" }}>
-        <div style={{ ...dropdown, width: "110px", height: "28px" }}>
+        <div style={{ ...dropdown, flex: 1, height: "28px" }}>
           <span>Isolated</span>
-          <Arrow />
         </div>
-        <div style={{ ...dropdown, width: "77px", height: "28px" }} onClick={onLeverageTap}>
+        <div style={{ ...dropdown, flex: "0 0 auto", height: "28px", minWidth: "68px" }} onClick={onLeverageTap}>
           <span>{state.leverage}x(Max)</span>
           <Arrow />
         </div>
@@ -106,8 +114,8 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
 
       {/* Price input */}
       {state.orderType !== "market" && (
-        <div style={{ ...inputBox, width: "138px", marginBottom: "4px" }}>
-          <span style={inputLabel}>Price (USDT)</span>
+        <div style={{ ...inputBox, marginBottom: "4px" }}>
+          <span style={inputLabel}>Price (USDC)</span>
           <input
             style={inputValue}
             type="text"
@@ -119,20 +127,16 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
       )}
 
       {/* Size input */}
-      <div style={{ ...inputBox, width: "190px", marginBottom: "6px" }}>
-        <span style={inputLabel}>Size</span>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ ...inputBox, marginBottom: "6px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "100%" }}>
           <input
-            style={{ ...inputValue, flex: 1 }}
+            style={{ ...inputValue, flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}
             type="text"
             inputMode="decimal"
             value={size}
             onChange={(e) => setSize(e.target.value)}
           />
-          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <span style={{ fontSize: "12px", color: "#00de0b" }}>{state.selectedCoin.symbol}</span>
-            <Arrow />
-          </div>
+          <span style={{ fontSize: "12px", color: "#00de0b", flexShrink: 0 }}>{state.selectedCoin.symbol}</span>
         </div>
       </div>
 
@@ -145,7 +149,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
           value={sizePercent}
           onChange={(e) => setSizePercent(Number(e.target.value))}
           style={{
-            width: "190px",
+            width: "100%",
             appearance: "none",
             background: "transparent",
             position: "absolute",
@@ -160,7 +164,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
           position: "absolute",
           top: "8px",
           left: 0,
-          width: "190px",
+          width: "100%",
           height: "6px",
           background: "#242424",
           borderRadius: "3px",
@@ -176,7 +180,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
           position: "absolute",
           top: "8px",
           left: 0,
-          width: "190px",
+          width: "100%",
           display: "flex",
           justifyContent: "space-between",
         }}>
@@ -192,27 +196,6 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
               }}
             />
           ))}
-        </div>
-      </div>
-
-      {/* Cost info */}
-      <div style={{ fontSize: "9px", fontWeight: 500, lineHeight: "13px", marginBottom: "2px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9f9f9f" }}>Cost</span>
-          <span>
-            <span style={{ color: "#00de0b" }}>1,000.33</span>
-            <span style={{ color: "#9f9f9f" }}> / </span>
-            <span style={{ color: "#ff5938" }}>1,000.32</span>
-            <span style={{ color: "#9f9f9f" }}> USDT</span>
-          </span>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9f9f9f" }}>Long Est. Liquidation Price</span>
-          <span><span style={{ color: "#00de0b" }}>600.3</span><span style={{ color: "#9f9f9f" }}> USDT</span></span>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span style={{ color: "#9f9f9f" }}>Short Est. Liquidation Price</span>
-          <span><span style={{ color: "#ff5938" }}>1,400.3</span><span style={{ color: "#9f9f9f" }}> USDT</span></span>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 export const ACCOUNT = {
   email: "user@gmail.com",
   wallet: "0x9834...9948",
-  balance: 1000.0,
+  balance: 100.0,
   currency: "USDC",
 } as const;
 

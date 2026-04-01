@@ -5,6 +5,8 @@ const container: CSSProperties = {
   background: "#050505",
   fontSize: "14px",
   fontFamily: "var(--font-family)",
+  paddingTop: "8px",
+  overflow: "hidden",
 };
 
 const headerRow: CSSProperties = {
@@ -53,7 +55,7 @@ export default function Orderbook() {
       {/* Asks (red) */}
       {asks.map((r) => (
         <div key={r.price} style={row}>
-          <span style={{ color: "#ff5938", fontSize: "14px" }}>{r.price.toLocaleString(undefined, { minimumFractionDigits: 1 })}</span>
+          <span style={{ color: "#ff5938", fontSize: "12px" }}>{r.price.toLocaleString(undefined, { minimumFractionDigits: 1 })}</span>
           <span style={{ color: "#e0e0e0", fontSize: "11px", textAlign: "right" }}>{r.size.toFixed(1).replace(".", ",")}</span>
         </div>
       ))}
@@ -67,20 +69,11 @@ export default function Orderbook() {
       {/* Bids (green) */}
       {bids.map((r) => (
         <div key={r.price} style={row}>
-          <span style={{ color: "#00de0b", fontSize: "14px" }}>{r.price.toLocaleString(undefined, { minimumFractionDigits: 1 })}</span>
+          <span style={{ color: "#00de0b", fontSize: "12px" }}>{r.price.toLocaleString(undefined, { minimumFractionDigits: 1 })}</span>
           <span style={{ color: "#e0e0e0", fontSize: "11px", textAlign: "right" }}>{r.size.toFixed(1).replace(".", ",")}</span>
         </div>
       ))}
 
-      {/* Buy/Sell ratio */}
-      <div style={ratioBar}>
-        <div style={{ width: `${buyPercent}%`, background: "#00de0b", borderRadius: "3px 0 0 3px" }} />
-        <div style={{ width: `${100 - buyPercent}%`, background: "#ff5938", borderRadius: "0 3px 3px 0" }} />
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "9px", fontWeight: 500, marginTop: "2px" }}>
-        <span style={{ color: "#37ff00" }}>B {buyPercent}%</span>
-        <span style={{ color: "#ff5938" }}>{100 - buyPercent}% S</span>
-      </div>
     </div>
   );
 }

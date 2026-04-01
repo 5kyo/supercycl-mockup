@@ -8,7 +8,6 @@ import OrderForm from "../components/trading/OrderForm";
 import Dashboard from "../components/trading/Dashboard";
 import BottomNav from "../components/layout/BottomNav";
 import Toast from "../components/common/Toast";
-import LeverageNotice from "../components/modals/LeverageNotice";
 import AdjustLeverage from "../components/modals/AdjustLeverage";
 import AutoTpSlModal from "../components/modals/AutoTpSlModal";
 import CoinSelector from "../components/modals/CoinSelector";
@@ -32,7 +31,7 @@ const scrollArea: CSSProperties = {
 
 const splitLayout: CSSProperties = {
   display: "flex",
-  gap: "0",
+  gap: "8px",
   padding: "0 16px",
 };
 
@@ -47,8 +46,6 @@ export default function TradingPage() {
 
   return (
     <div style={wrapper}>
-      <LeverageNotice />
-
       {/* Header */}
       <Header />
 
@@ -63,13 +60,13 @@ export default function TradingPage() {
           <>
             <Chart />
             <div style={splitLayout}>
-              <div style={{ flex: "0 0 190px" }}>
+              <div style={{ flex: "0 0 170px", width: "170px", maxWidth: "170px", minWidth: 0, overflow: "hidden", position: "relative" }}>
                 <OrderForm
                   onLeverageTap={() => setShowLeverage(true)}
                   onTpSlEdit={() => setShowTpSl(true)}
                 />
               </div>
-              <div style={{ flex: 1, paddingLeft: "8px" }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <Orderbook />
               </div>
             </div>

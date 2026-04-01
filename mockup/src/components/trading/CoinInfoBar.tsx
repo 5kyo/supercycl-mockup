@@ -17,7 +17,7 @@ export default function CoinInfoBar({ onCoinSelect }: Props) {
   const isPositive = coin.change24h >= 0;
 
   return (
-    <div style={bar}>
+    <div style={{ ...bar, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <button
         onClick={onCoinSelect}
         style={{
@@ -36,15 +36,18 @@ export default function CoinInfoBar({ onCoinSelect }: Props) {
           <path d="M1 1L4 4L7 1" stroke="#e0e0e0" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      <p style={{
-        fontSize: "12px",
-        fontWeight: 600,
-        lineHeight: "16px",
-        color: isPositive ? "#00de0b" : "#ff5938",
-        marginTop: "2px",
-      }}>
-        {isPositive ? "+" : ""}{coin.change24h}%
-      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span style={{ fontSize: "14px", fontWeight: 600, color: "#fff" }}>
+          {coin.price.toLocaleString()}
+        </span>
+        <span style={{
+          fontSize: "12px",
+          fontWeight: 600,
+          color: isPositive ? "#00de0b" : "#ff5938",
+        }}>
+          {isPositive ? "+" : ""}{coin.change24h}%
+        </span>
+      </div>
     </div>
   );
 }
