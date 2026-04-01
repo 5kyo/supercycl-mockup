@@ -9,7 +9,7 @@ const container: CSSProperties = {
   borderTop: "1px solid var(--border-color)",
 };
 
-type Tab = "positions" | "open" | "history";
+type Tab = "positions" | "open";
 
 const tabStyle = (active: boolean): CSSProperties => ({
   padding: "8px 16px",
@@ -32,7 +32,7 @@ export default function Dashboard() {
   return (
     <div style={container}>
       <div style={{ display: "flex", gap: "4px", borderBottom: "1px solid var(--border-color)", marginBottom: "12px" }}>
-        {([["positions", "Positions"], ["open", "Open Order"], ["history", "Order history"]] as const).map(([key, label]) => (
+        {([["positions", "Positions"], ["open", "Open Order"]] as const).map(([key, label]) => (
           <button key={key} style={tabStyle(tab === key)} onClick={() => setTab(key as Tab)}>
             {label}
             {key === "positions" && state.positions.length > 0 && (
@@ -51,7 +51,6 @@ export default function Dashboard() {
       )}
 
       {tab === "open" && <Empty label="No open orders" />}
-      {tab === "history" && <Empty label="No order history" />}
     </div>
   );
 }

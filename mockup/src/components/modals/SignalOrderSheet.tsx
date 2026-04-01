@@ -1,5 +1,6 @@
+import { useState } from "react";
 import type { Signal } from "../../constants/signals";
-import { ACCOUNT } from "../../constants/defaults";
+import { ACCOUNT, MAX_LEVERAGE, MIN_LEVERAGE } from "../../constants/defaults";
 import BottomSheet from "../common/BottomSheet";
 import type { CSSProperties } from "react";
 
@@ -13,14 +14,40 @@ interface Props {
 const row: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   padding: "8px 0",
   fontSize: "13px",
 };
 
+const editInput: CSSProperties = {
+  background: "#1d1d1d",
+  border: "1px solid #363636",
+  borderRadius: "4px",
+  padding: "6px 10px",
+  fontSize: "13px",
+  color: "#fff",
+  fontFamily: "var(--font-family)",
+  textAlign: "right" as const,
+  width: "120px",
+  outline: "none",
+};
+
 export default function SignalOrderSheet({ signal, onExecute, onModify, onClose }: Props) {
   const isLong = signal.direction === "LONG";
+  const [editing, setEditing] = useState(false);
+  const [leverage, setLeverage] = useState(signal.leverage);
+  const [quantity, setQuantity] = useState(ACCOUNT.balance.toString());
+
   const tpPercent = Math.abs((signal.targetPrice - signal.entryPrice) / signal.entryPrice * 100).toFixed(2);
   const slPercent = Math.abs((signal.stopLoss - signal.entryPrice) / signal.entryPrice * 100).toFixed(2);
+
+  const handleModify = () => {
+    if (editing) {
+      setEditing(false);
+    } else {
+      setEditing(true);
+    }
+  };
 
   return (
     <BottomSheet onClose={onClose} title="Signal Order Confirm">
@@ -47,14 +74,76 @@ export default function SignalOrderSheet({ signal, onExecute, onModify, onClose 
             <span style={{ color: "var(--text-tertiary)" }}>Entry Price</span>
             <span style={{ fontFamily: "var(--font-mono)" }}>${signal.entryPrice.toLocaleString()}</span>
           </div>
+
+          {/* Quantity — editable */}
           <div style={row}>
-            <span style={{ color: "var(--text-tertiary)" }}>Quantity</span>
-            <span style={{ color: "var(--text-secondary)" }}>{ACCOUNT.balance} {ACCOUNT.currency} based</span>
+            <span style={{ color: "var(--text-tertiary)" }}>Margin</span>
+            {editing ? (
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <input
+                  style={editInput}
+                  type="text"
+                  inputMode="decimal"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+                <span style={{ fontSize: "11px", color: "#666" }}>USDC</span>
+              </div>
+            ) : (
+              <span style={{ color: "var(--text-secondary)" }}>{quantity} {ACCOUNT.currency} based</span>
+            )}
           </div>
+
+          {/* Leverage — editable */}
           <div style={row}>
             <span style={{ color: "var(--text-tertiary)" }}>Leverage</span>
-            <span>{signal.leverage}x</span>
+            {editing ? (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <button
+                  onClick={() => setLeverage(Math.max(MIN_LEVERAGE, leverage - 1))}
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "4px",
+                    background: "#1d1d1d",
+                    border: "1px solid #363636",
+                    color: "#fff",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  −
+                </button>
+                <span style={{ fontSize: "14px", fontWeight: 600, minWidth: "24px", textAlign: "center" }}>
+                  {leverage}x
+                </span>
+                <button
+                  onClick={() => setLeverage(Math.min(MAX_LEVERAGE, leverage + 1))}
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "4px",
+                    background: "#1d1d1d",
+                    border: "1px solid #363636",
+                    color: "#fff",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <span>{leverage}x</span>
+            )}
           </div>
+
           <div style={{ ...row, borderTop: "1px solid var(--border-color)", marginTop: "4px", paddingTop: "12px" }}>
             <span style={{ color: "var(--accent-green)" }}>TP: ${signal.targetPrice.toLocaleString()}</span>
             <span style={{ color: "var(--accent-green)", fontSize: "12px" }}>+{tpPercent}%</span>
@@ -68,19 +157,19 @@ export default function SignalOrderSheet({ signal, onExecute, onModify, onClose 
         {/* Actions */}
         <div style={{ display: "flex", gap: "10px" }}>
           <button
-            onClick={onModify}
+            onClick={handleModify}
             style={{
               flex: 1,
               padding: "14px",
               fontSize: "14px",
               fontWeight: 600,
               borderRadius: "var(--radius-md)",
-              background: "var(--bg-card)",
-              color: "var(--text-secondary)",
-              border: "1px solid var(--border-color)",
+              background: editing ? "#1d1d1d" : "var(--bg-card)",
+              color: editing ? "#00de0b" : "var(--text-secondary)",
+              border: editing ? "1px solid #00de0b" : "1px solid var(--border-color)",
             }}
           >
-            Modify
+            {editing ? "Done" : "Modify"}
           </button>
           <button
             onClick={onExecute}

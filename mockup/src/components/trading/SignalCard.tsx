@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 interface Props {
   readonly signal: Signal;
   readonly onExecute: (id: string) => void;
-  readonly onModify: (id: string) => void;
 }
 
 function relativeTime(timestamp: string): string {
@@ -32,7 +31,7 @@ const CONFIDENCE_COLOR: Record<string, string> = {
   LOW: "#666",
 };
 
-export default function SignalCard({ signal, onExecute, onModify }: Props) {
+export default function SignalCard({ signal, onExecute }: Props) {
   const isLong = signal.direction === "LONG";
   const active = isActive(signal);
   const dirColor = isLong ? "#00de0b" : "#ff5938";
@@ -122,41 +121,23 @@ export default function SignalCard({ signal, onExecute, onModify }: Props) {
 
       {/* CTA */}
       {active && (
-        <div style={{ display: "flex", gap: "4px", marginTop: "8px" }}>
-          <button
-            onClick={() => onModify(signal.id)}
-            style={{
-              flex: "0 0 60px",
-              height: "28px",
-              fontSize: "10px",
-              fontWeight: 500,
-              borderRadius: "3px",
-              background: "#1d1d1d",
-              border: "1px solid #363636",
-              color: "#9f9f9f",
-              cursor: "pointer",
-              fontFamily: "var(--font-family)",
-            }}
-          >
-            Modify
-          </button>
-          <button
-            onClick={() => onExecute(signal.id)}
-            style={{
-              flex: 1,
-              height: "28px",
-              fontSize: "10px",
-              fontWeight: 600,
-              borderRadius: "3px",
-              background: dirColor,
-              color: "#151515",
-              cursor: "pointer",
-              fontFamily: "var(--font-family)",
-            }}
-          >
-            Execute
-          </button>
-        </div>
+        <button
+          onClick={() => onExecute(signal.id)}
+          style={{
+            width: "100%",
+            height: "28px",
+            marginTop: "8px",
+            fontSize: "10px",
+            fontWeight: 600,
+            borderRadius: "3px",
+            background: dirColor,
+            color: "#151515",
+            cursor: "pointer",
+            fontFamily: "var(--font-family)",
+          }}
+        >
+          Execute
+        </button>
       )}
     </div>
   );

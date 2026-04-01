@@ -13,6 +13,7 @@ import AutoTpSlModal from "../components/modals/AutoTpSlModal";
 import CoinSelector from "../components/modals/CoinSelector";
 import SettingsPage from "./SettingsPage";
 import SignalPage from "./SignalPage";
+import PortfolioPage from "./PortfolioPage";
 import type { CSSProperties } from "react";
 
 const wrapper: CSSProperties = {
@@ -76,14 +77,7 @@ export default function TradingPage() {
 
         {isSignal && <SignalPage />}
 
-        {state.activeTab === "portfolio" && (
-          <div style={{ padding: "40px 24px", textAlign: "center" }}>
-            <div style={{ fontSize: "16px", fontWeight: 600, marginBottom: "8px" }}>Portfolio</div>
-            <div style={{ fontSize: "13px", color: "#666" }}>
-              Trading performance view<br />coming in the next version.
-            </div>
-          </div>
-        )}
+        {state.activeTab === "portfolio" && <PortfolioPage />}
 
         {state.activeTab === "settings" && (
           <SettingsPage onTpSlEdit={() => setShowTpSl(true)} />

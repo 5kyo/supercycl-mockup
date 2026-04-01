@@ -196,7 +196,6 @@ export default function SignalPage() {
               key={signal.id}
               signal={signal}
               onExecute={handleExecute}
-              onModify={handleModify}
             />
           ))
         )}
