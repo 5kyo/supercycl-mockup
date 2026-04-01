@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 
 interface Props {
@@ -28,6 +29,8 @@ const closeStyle: CSSProperties = {
 };
 
 export default function Header({ variant = "default", onClose }: Props) {
+  const navigate = useNavigate();
+
   if (variant === "none") return null;
 
   if (variant === "close") {
@@ -49,7 +52,10 @@ export default function Header({ variant = "default", onClose }: Props) {
 
   return (
     <div style={defaultStyle}>
-      <div style={{ display: "flex", alignItems: "center", width: "140px", height: "20px" }}>
+      <div
+        onClick={() => navigate("/")}
+        style={{ display: "flex", alignItems: "center", width: "140px", height: "20px", cursor: "pointer" }}
+      >
         <img
           src="/images/logo-icon.svg"
           alt=""

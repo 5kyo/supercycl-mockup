@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import Header from "../components/common/Header";
+import PlasmaOrb from "../components/canvas/PlasmaOrb";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
@@ -58,11 +59,7 @@ export default function TermsPage() {
         justifyContent: "center",
         padding: "0 20px",
       }}>
-        <img
-          src="/images/terms-illust.png"
-          alt=""
-          style={{ width: "100%", maxWidth: "280px", height: "auto", opacity: 0.8 }}
-        />
+        <PlasmaOrb style={{ width: "100%", maxWidth: "320px", aspectRatio: "1" }} />
       </div>
 
       <div style={{ padding: "0 20px 40px" }}>

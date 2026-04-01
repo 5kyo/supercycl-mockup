@@ -22,6 +22,7 @@ const bgImage: CSSProperties = {
   pointerEvents: "none",
 };
 
+
 const dim: CSSProperties = {
   position: "absolute",
   inset: 0,
