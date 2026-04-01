@@ -32,18 +32,9 @@ const spreadRow: CSSProperties = {
   fontWeight: 600,
 };
 
-const ratioBar: CSSProperties = {
-  display: "flex",
-  height: "6px",
-  borderRadius: "3px",
-  overflow: "hidden",
-  marginTop: "6px",
-};
-
 export default function Orderbook() {
   const asks = [...ASKS].reverse().slice(0, 4);
   const bids = BIDS.slice(0, 4);
-  const buyPercent = 58;
 
   return (
     <div style={container}>

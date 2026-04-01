@@ -32,7 +32,7 @@ const editInput: CSSProperties = {
   outline: "none",
 };
 
-export default function SignalOrderSheet({ signal, onExecute, onModify, onClose }: Props) {
+export default function SignalOrderSheet({ signal, onExecute, onModify: _onModify, onClose }: Props) {
   const isLong = signal.direction === "LONG";
   const [editing, setEditing] = useState(false);
   const [leverage, setLeverage] = useState(signal.leverage);

@@ -75,22 +75,6 @@ export default function SignalPage() {
     if (signal) setSheetSignal(signal);
   };
 
-  const handleModify = (id: string) => {
-    const signal = signals.find((s) => s.id === id);
-    if (!signal) return;
-    dispatch({
-      type: "PREFILL_FROM_SIGNAL",
-      prefill: {
-        coinSymbol: signal.coin,
-        price: signal.entryPrice,
-        leverage: signal.leverage,
-        tp: signal.targetPrice,
-        sl: signal.stopLoss,
-        side: signal.direction === "LONG" ? "Long" : "Short",
-      },
-    });
-    dispatch({ type: "SHOW_TOAST", message: "Signal values loaded into order form" });
-  };
 
   const handleSheetExecute = () => {
     if (!sheetSignal) return;
