@@ -109,6 +109,23 @@ export default function SettingsPage({ onTpSlEdit }: Props) {
           <span>Supercycl Website</span>
           <span style={{ fontSize: "12px", color: "var(--text-tertiary)" }}>supercycl.io &#8599;</span>
         </a>
+        <a
+          href="https://supercycl.gitbook.io/supercycl-docs-1"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "14px",
+            color: "var(--text-primary)",
+            textDecoration: "none",
+            marginTop: "12px",
+          }}
+        >
+          <span>Docs</span>
+          <span style={{ fontSize: "12px", color: "var(--text-tertiary)" }}>gitbook &#8599;</span>
+        </a>
       </div>
 
       {/* Logout */}
