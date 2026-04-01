@@ -20,7 +20,7 @@ const ko: Translations = {
   // login
   "login.title": "Supercycl\uc5d0 \ub85c\uadf8\uc778",
   "login.mockName": "\ud64d\uae38\ub3d9",
-  "login.mockInitial": "\uae40",
+  "login.mockInitial": "\ud64d",
   "login.continueAs": "{name}(\uc73c)\ub85c \uacc4\uc18d",
 
   // terms
@@ -36,7 +36,7 @@ const ko: Translations = {
   "onboarding.complete": "\ubaa8\ub4e0 \uc900\ube44\uac00 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4!",
   "onboarding.step.wallet": "\uc9c0\uac11 \uc0dd\uc131 \uc911",
   "onboarding.step.connect": "Hyperliquid \uc5f0\uacb0 \uc911",
-  "onboarding.step.funds": "\ud14c\uc2a4\ud2b8 \uc790\uae08 \ub85c\ub529 \uc911",
+  "onboarding.step.funds": "\ud14c\uc2a4\ud2b8 \uc790\uae08 \ucda9\uc804 \uc911",
   "onboarding.deposited": "{amount} USDC \ud14c\uc2a4\ud2b8 \uc790\uae08\uc774 \uc785\uae08\ub418\uc5c8\uc2b5\ub2c8\ub2e4.",
   "onboarding.balance": "\uc794\uc561",
   "onboarding.startTrading": "\ud2b8\ub808\uc774\ub529 \uc2dc\uc791",
@@ -51,7 +51,7 @@ const ko: Translations = {
   "trade.openOrder": "\ubbf8\uccb4\uacb0 \uc8fc\ubb38",
   "trade.noPositions": "\uc624\ud508 \ud3ec\uc9c0\uc158 \uc5c6\uc74c",
   "trade.noOrders": "\ubbf8\uccb4\uacb0 \uc8fc\ubb38 \uc5c6\uc74c",
-  "trade.positionClosed": "\ud3ec\uc9c0\uc158 \uccad\uc0b0\ub428",
+  "trade.positionClosed": "\ud3ec\uc9c0\uc158 \uc885\ub8cc\ub428",
   "trade.entry": "\uc9c4\uc785",
   "trade.auto": "\uc790\ub3d9",
   "trade.orderPlaced": "{label} {symbol} \uc8fc\ubb38 \uccb4\uacb0{tpsl}",
@@ -65,7 +65,7 @@ const ko: Translations = {
   "leverage.maxWarning": "\ucd5c\ub300 \ub808\ubc84\ub9ac\uc9c0 {max}x \uc81c\ud55c (\uc0ac\uc6a9\uc790 \ubcf4\ud638)",
   "leverage.noticeTitle": "\ub808\ubc84\ub9ac\uc9c0 \uc815\ucc45 \uc548\ub0b4",
   "leverage.noticeBody": "\uc774 \uacc4\uc815\uc740 \uc0ac\uc6a9\uc790 \ubcf4\ud638 \uc815\ucc45\uc5d0 \ub530\ub77c \ucd5c\ub300 \ub808\ubc84\ub9ac\uc9c0 {max}x\ub85c \uc81c\ud55c\ub429\ub2c8\ub2e4.",
-  "leverage.understand": "\uc774\ud574\ud588\uc2b5\ub2c8\ub2e4",
+  "leverage.understand": "\ud655\uc778\ud588\uc2b5\ub2c8\ub2e4",
 
   // tpsl
   "tpsl.title": "\uc790\ub3d9 TP/SL \uc124\uc815",
@@ -76,7 +76,7 @@ const ko: Translations = {
   // signal
   "signal.performance": "\ucd5c\uadfc 30\uc77c \uc131\uacfc",
   "signal.hit": "\uc801\uc911",
-  "signal.miss": "\uc2e4\ud328",
+  "signal.miss": "\ubbf8\uc801\uc911",
   "signal.expired": "\ub9cc\ub8cc",
   "signal.avgPnl": "\ud3c9\uade0 \uc190\uc775",
   "signal.hitRate": "\uc801\uc911\ub960",
@@ -97,7 +97,7 @@ const ko: Translations = {
   "signal.confidence.med": "\ubcf4\ud1b5",
   "signal.confidence.low": "\ub0ae\uc74c",
   "signal.status.hitTp": "TP \ub2ec\uc131",
-  "signal.status.hitSl": "SL \ub2ec\uc131",
+  "signal.status.hitSl": "SL \ub3c4\ub2ec",
   "signal.status.expired": "\ub9cc\ub8cc",
   "signal.status.cancelled": "\ucde8\uc18c",
 
@@ -115,8 +115,8 @@ const ko: Translations = {
   "portfolio.openPositions": "\uc624\ud508 \ud3ec\uc9c0\uc158",
   "portfolio.noPositions": "\uc624\ud508 \ud3ec\uc9c0\uc158 \uc5c6\uc74c",
   "portfolio.recentActivity": "\ucd5c\uadfc \ud65c\ub3d9",
-  "portfolio.openedShort": "XRPUSDT \uc21f \uac1c\uc124 \u00b7 2x",
-  "portfolio.openedLong": "BTCUSDT \ub871 \uac1c\uc124 \u00b7 2x",
+  "portfolio.openedShort": "XRPUSDT \uc21f \uc9c4\uc785 \u00b7 2x",
+  "portfolio.openedLong": "BTCUSDT \ub871 \uc9c4\uc785 \u00b7 2x",
   "portfolio.deposited": "{amount} USDC \uc785\uae08",
 
   // settings
@@ -131,7 +131,7 @@ const ko: Translations = {
   "settings.docs": "\ubb38\uc11c",
   "settings.language": "\uc5b8\uc5b4",
   "settings.addressCopied": "\uc8fc\uc18c\uac00 \ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4!",
-  "settings.loggedOut": "\ub85c\uadf8\uc544\uc6c3\ub428 (\ubaa9\uc5c5)",
+  "settings.loggedOut": "\ub85c\uadf8\uc544\uc6c3\ub428 (\ub370\ubaa8)",
   "settings.connected": "\uc5f0\uacb0\ub428 \u2713",
 
   // coin selector
@@ -139,7 +139,7 @@ const ko: Translations = {
   "coinSelector.search": "\ucf54\uc778 \uac80\uc0c9...",
 
   // nav
-  "nav.trade": "\ud2b8\ub808\uc774\ub4dc",
+  "nav.trade": "\ud2b8\ub808\uc774\ub529",
   "nav.signal": "\uc2dc\uadf8\ub110",
   "nav.portfolio": "\ud3ec\ud2b8\ud3f4\ub9ac\uc624",
   "nav.settings": "\uc124\uc815",
