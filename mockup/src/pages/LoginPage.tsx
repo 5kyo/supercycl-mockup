@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import Header from "../components/common/Header";
 import type { CSSProperties } from "react";
+import { asset } from "../utils/asset";
 
 const page: CSSProperties = {
   height: "100dvh",
@@ -105,7 +106,7 @@ export default function LoginPage() {
 
   return (
     <div style={page}>
-      <img src="/images/landing-bg.png" alt="" style={bgImage} />
+      <img src={asset("images/landing-bg.png")} alt="" style={bgImage} />
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <Header />
@@ -124,7 +125,7 @@ export default function LoginPage() {
         <div style={handle} />
 
         <div style={{ textAlign: "center" }}>
-          <img src="/images/logo-icon.svg" alt="Supercycl" style={{ width: "40px", height: "40px" }} />
+          <img src={asset("images/logo-icon.svg")} alt="Supercycl" style={{ width: "40px", height: "40px" }} />
         </div>
 
         <p style={{

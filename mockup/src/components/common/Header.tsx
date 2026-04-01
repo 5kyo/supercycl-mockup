@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
+import { asset } from "../../utils/asset";
 
 interface Props {
   readonly variant?: "default" | "close" | "none";
@@ -41,7 +42,7 @@ export default function Header({ variant = "default", onClose }: Props) {
           style={{ background: "none", padding: 0, display: "flex" }}
         >
           <img
-            src="/images/icon-close.svg"
+            src={asset("images/icon-close.svg")}
             alt="Close"
             style={{ width: "24px", height: "24px" }}
           />
@@ -57,19 +58,19 @@ export default function Header({ variant = "default", onClose }: Props) {
         style={{ display: "flex", alignItems: "center", width: "140px", height: "20px", cursor: "pointer" }}
       >
         <img
-          src="/images/logo-icon.svg"
+          src={asset("images/logo-icon.svg")}
           alt=""
           style={{ width: "20px", height: "20px", flexShrink: 0 }}
         />
         <img
-          src="/images/logo-text.svg"
+          src={asset("images/logo-text.svg")}
           alt="Supercycl"
           style={{ height: "11px", width: "auto" }}
         />
       </div>
       <div style={{ position: "relative", width: "49px", height: "14px" }}>
         <img
-          src="/images/testnet-badge.svg"
+          src={asset("images/testnet-badge.svg")}
           alt=""
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
         />

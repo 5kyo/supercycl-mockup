@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
+import { asset } from "../../utils/asset";
 
 const container: CSSProperties = {
   width: "100%",
@@ -42,7 +43,7 @@ export default function Chart() {
       </div>
 
       <img
-        src="/images/chart-candle.png"
+        src={asset("images/chart-candle.png")}
         alt="Chart"
         style={{
           width: "100%",
