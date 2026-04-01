@@ -82,9 +82,9 @@ export default function TermsPage() {
           </div>
           <span style={{ fontSize: "16px", lineHeight: "21px", color: "#9f9f9f" }}>
             I agree to the{" "}
-            <span style={{ color: "#fff", textDecoration: "underline" }}>Terms of Service</span>
+            <a href="https://supercycl.io/terms" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>Terms of Service</a>
             {" "}and{" "}
-            <span style={{ color: "#fff", textDecoration: "underline" }}>Privacy Policy</span>
+            <a href="https://supercycl.io/policy" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>Privacy Policy</a>
           </span>
         </div>
 
