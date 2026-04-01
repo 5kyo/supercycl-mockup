@@ -55,7 +55,7 @@ const filterTab = (active: boolean): CSSProperties => ({
   background: "none",
   padding: "0 0 6px",
   marginRight: "16px",
-  fontSize: "9px",
+  fontSize: "12px",
   fontWeight: 500,
   color: active ? "#fff" : "#666",
   position: "relative" as const,
@@ -103,29 +103,29 @@ export default function SignalPage() {
     <div>
       {/* Performance Summary */}
       <div style={perfSection}>
-        <p style={{ fontSize: "10px", fontWeight: 500, color: "#666" }}>
+        <p style={{ fontSize: "12px", fontWeight: 500, color: "#666" }}>
           Last 30 days performance
         </p>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginTop: "8px" }}>
           <div style={statsRow}>
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500, color: "#00de0b" }}>Hit</span>
-              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.hitCount}</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#00de0b" }}>Hit</span>
+              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.hitCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500, color: "#ff5938" }}>Miss</span>
-              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.missCount}</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#ff5938" }}>Miss</span>
+              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.missCount}</span>
             </div>
             <div style={divider} />
             <div style={statItem}>
-              <span style={{ fontSize: "10px", fontWeight: 500, color: "#666" }}>Expired</span>
-              <span style={{ fontSize: "14px", fontWeight: 700 }}>{SIGNAL_STATS.expiredCount}</span>
+              <span style={{ fontSize: "12px", fontWeight: 500, color: "#666" }}>Expired</span>
+              <span style={{ fontSize: "16px", fontWeight: 700 }}>{SIGNAL_STATS.expiredCount}</span>
             </div>
           </div>
 
-          <div style={{ textAlign: "right", fontSize: "9px", lineHeight: "13px" }}>
+          <div style={{ textAlign: "right", fontSize: "11px", lineHeight: "15px" }}>
             <div>
               <span style={{ color: "#9f9f9f" }}>Avg PnL </span>
               <span style={{ color: "#00de0b", fontWeight: 700 }}>+{SIGNAL_STATS.avgPnlPercent}%</span>

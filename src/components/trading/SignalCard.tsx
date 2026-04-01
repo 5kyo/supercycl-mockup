@@ -53,14 +53,14 @@ export default function SignalCard({ signal, onExecute }: Props) {
           background: active ? dirColor : "#666",
           flexShrink: 0,
         }} />
-        <span style={{ fontSize: "12px", fontWeight: 700 }}>{signal.pair}</span>
+        <span style={{ fontSize: "13px", fontWeight: 700 }}>{signal.pair}</span>
         {active ? (
-          <span style={{ fontSize: "10px", fontWeight: 600, color: dirColor }}>
+          <span style={{ fontSize: "11px", fontWeight: 600, color: dirColor }}>
             {isLong ? "Long" : "Short"}
           </span>
         ) : (
           <span style={{
-            fontSize: "9px",
+            fontSize: "10px",
             fontWeight: 600,
             color: STATUS_LABEL[signal.status]?.color,
             background: "rgba(255,255,255,0.05)",
@@ -71,33 +71,33 @@ export default function SignalCard({ signal, onExecute }: Props) {
           </span>
         )}
         <span style={{
-          fontSize: "9px",
+          fontSize: "10px",
           fontWeight: 500,
           color: CONFIDENCE_COLOR[signal.confidence],
           marginLeft: "auto",
         }}>
           {signal.confidence === "HIGH" ? "High" : signal.confidence === "MEDIUM" ? "Med" : "Low"}
         </span>
-        <span style={{ fontSize: "9px", color: "#505050" }}>
+        <span style={{ fontSize: "10px", color: "#505050" }}>
           {relativeTime(signal.timestamp)}
         </span>
       </div>
 
       {/* Data: Entry / TP / SL */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", marginTop: "6px" }}>
-        <span style={{ fontSize: "9px", color: "#666" }}>Entry</span>
-        <span style={{ fontSize: "9px", color: "#666" }}>TP</span>
-        <span style={{ fontSize: "9px", color: "#666" }}>SL</span>
+        <span style={{ fontSize: "10px", color: "#666" }}>Entry</span>
+        <span style={{ fontSize: "10px", color: "#666" }}>TP</span>
+        <span style={{ fontSize: "10px", color: "#666" }}>SL</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px" }}>
-        <span style={{ fontSize: "11px", fontWeight: 500 }}>{signal.entryPrice.toLocaleString()}</span>
-        <span style={{ fontSize: "11px", fontWeight: 500, color: "#00de0b" }}>{signal.targetPrice.toLocaleString()}</span>
-        <span style={{ fontSize: "11px", fontWeight: 500, color: "#ff5938" }}>{signal.stopLoss.toLocaleString()}</span>
+        <span style={{ fontSize: "12px", fontWeight: 500 }}>{signal.entryPrice.toLocaleString()}</span>
+        <span style={{ fontSize: "12px", fontWeight: 500, color: "#00de0b" }}>{signal.targetPrice.toLocaleString()}</span>
+        <span style={{ fontSize: "12px", fontWeight: 500, color: "#ff5938" }}>{signal.stopLoss.toLocaleString()}</span>
       </div>
 
       {/* Reasoning */}
       <p style={{
-        fontSize: "9px",
+        fontSize: "10px",
         color: "#505050",
         marginTop: "4px",
         whiteSpace: "nowrap",
@@ -127,7 +127,7 @@ export default function SignalCard({ signal, onExecute }: Props) {
             width: "100%",
             height: "28px",
             marginTop: "8px",
-            fontSize: "10px",
+            fontSize: "12px",
             fontWeight: 600,
             borderRadius: "3px",
             background: dirColor,
