@@ -1,0 +1,31 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 360 302" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="img_01">
+<mask id="mask0_0_111" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="360" height="302">
+<rect id="area" width="360" height="302" fill="var(--fill-0, white)"/>
+</mask>
+<g mask="url(#mask0_0_111)">
+<circle id="Ellipse 14" cx="180" cy="145" r="81" fill="url(#paint0_linear_0_111)"/>
+<circle id="Ellipse 9" cx="180" cy="145" r="81" stroke="url(#paint1_linear_0_111)" stroke-width="0.5"/>
+<circle id="Ellipse 10" cx="237.276" cy="87.7243" r="4" fill="var(--fill-0, #AAAAAA)"/>
+<circle id="Ellipse 11" cx="122.724" cy="202.276" r="4" fill="var(--fill-0, #ABABAB)"/>
+<circle id="Ellipse 12" cx="122.724" cy="87.7243" r="4" fill="var(--fill-0, white)"/>
+<circle id="Ellipse 13" cx="237.276" cy="202.276" r="4" fill="var(--fill-0, #6A6A6A)"/>
+<g id="v">
+<path id="Vector 25" d="M150 141L172.5 164L210 126" stroke="var(--stroke-0, white)" stroke-width="0.5" stroke-linejoin="round"/>
+<circle id="Ellipse 14_2" cx="150" cy="141" r="4" fill="var(--fill-0, white)"/>
+<circle id="Ellipse 15" cx="172.5" cy="164" r="4" fill="var(--fill-0, white)"/>
+<circle id="Ellipse 16" cx="210" cy="126" r="4" fill="var(--fill-0, white)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_111" x1="99" y1="64" x2="261" y2="226" gradientUnits="userSpaceOnUse">
+<stop offset="0.0384615" stop-color="#202020"/>
+<stop offset="0.538462" stop-color="#050505"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_111" x1="99" y1="64" x2="261" y2="226" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#505050"/>
+</linearGradient>
+</defs>
+</svg>

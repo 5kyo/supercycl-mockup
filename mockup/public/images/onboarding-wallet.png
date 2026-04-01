@@ -1,0 +1,33 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 86 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="&#236;&#167;&#128;&#234;&#176;&#145;">
+<g id="Union">
+<path d="M69 13H83V73H3V3H69V13Z" fill="url(#paint0_linear_0_18)"/>
+<path d="M69 13H68.75V13.25H69V13ZM83 13H83.25V12.75H83V13ZM83 73V73.25H83.25V73H83ZM3 73H2.75V73.25H3V73ZM3 3V2.75H2.75V3H3ZM69 3H69.25V2.75H69V3ZM69 13V13.25H83V13V12.75H69V13ZM83 13H82.75V73H83H83.25V13H83ZM83 73V72.75H3V73V73.25H83V73ZM3 73H3.25V3H3H2.75V73H3ZM3 3V3.25H69V3V2.75H3V3ZM69 3H68.75V13H69H69.25V3H69Z" fill="url(#paint1_linear_0_18)"/>
+</g>
+<circle id="Ellipse 15" cx="3" cy="3" r="3" fill="var(--fill-0, white)"/>
+<circle id="Ellipse 16" cx="69" cy="3" r="3" fill="var(--fill-0, #B1B1B1)"/>
+<circle id="Ellipse 17" cx="83" cy="13" r="3" fill="var(--fill-0, #8D8D8D)"/>
+<circle id="Ellipse 18" cx="83" cy="73" r="3" fill="var(--fill-0, #545454)"/>
+<circle id="Ellipse 19" cx="3" cy="73" r="3" fill="var(--fill-0, #AFAFAF)"/>
+<path id="Rectangle 34624827" d="M12 13H69" stroke="url(#paint2_linear_0_18)" stroke-width="0.5"/>
+<rect id="Rectangle 34624826" x="61.25" y="39.25" width="14.5" height="7.5" stroke="url(#paint3_linear_0_18)" stroke-width="0.5"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_18" x1="3" y1="3" x2="92.9031" y2="56.2944" gradientUnits="userSpaceOnUse">
+<stop stop-color="#202020"/>
+<stop offset="1" stop-color="#050505"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_18" x1="3" y1="3" x2="83" y2="73" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#505050"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_18" x1="-32" y1="-6" x2="66.9551" y2="-13.6057" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#A2A2A2"/>
+</linearGradient>
+<linearGradient id="paint3_linear_0_18" x1="40.5" y1="29.5" x2="73.3731" y2="80.0815" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#505050"/>
+</linearGradient>
+</defs>
+</svg>
