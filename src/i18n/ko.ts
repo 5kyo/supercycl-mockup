@@ -45,7 +45,7 @@ const ko: Translations = {
   "trade.market": "\uc2dc\uc7a5\uac00",
   "trade.limit": "\uc9c0\uc815\uac00",
   "trade.buyLong": "\ub9e4\uc218 / \ub871",
-  "trade.sellShort": "\ub9e4\ub3c4 / \uc21f",
+  "trade.sellShort": "매도 / 숏",
   "trade.priceUsdc": "\uac00\uaca9 (USDC)",
   "trade.positions": "\ud3ec\uc9c0\uc158",
   "trade.openOrder": "\ubbf8\uccb4\uacb0 \uc8fc\ubb38",
@@ -104,7 +104,7 @@ const ko: Translations = {
   // filter
   "filter.all": "\uc804\uccb4",
   "filter.long": "\ub871",
-  "filter.short": "\uc21f",
+  "filter.short": "숏",
   "filter.active": "\ud65c\uc131",
   "filter.closed": "\uc885\ub8cc",
 
@@ -115,7 +115,7 @@ const ko: Translations = {
   "portfolio.openPositions": "\uc624\ud508 \ud3ec\uc9c0\uc158",
   "portfolio.noPositions": "\uc624\ud508 \ud3ec\uc9c0\uc158 \uc5c6\uc74c",
   "portfolio.recentActivity": "\ucd5c\uadfc \ud65c\ub3d9",
-  "portfolio.openedShort": "XRPUSDT \uc21f \uc9c4\uc785 \u00b7 2x",
+  "portfolio.openedShort": "XRPUSDT 숏 진입 · 2x",
   "portfolio.openedLong": "BTCUSDT \ub871 \uc9c4\uc785 \u00b7 2x",
   "portfolio.deposited": "{amount} USDC \uc785\uae08",
 
