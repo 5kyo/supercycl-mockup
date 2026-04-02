@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import PlasmaOrb from "../components/canvas/PlasmaOrb";
-import { useTranslation } from "../i18n";
+import en from "../i18n/en";
 import { ACCOUNT } from "../constants/defaults";
 import type { CSSProperties } from "react";
 
@@ -26,9 +26,8 @@ export default function OnboardingPage() {
   const [completed, setCompleted] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useApp();
-  const { t } = useTranslation();
 
-  const steps = stepKeys.map((key) => t(key));
+  const steps = stepKeys.map((key) => en[key]);
 
   useEffect(() => {
     const timers = [
@@ -81,7 +80,7 @@ export default function OnboardingPage() {
           textAlign: "center",
           marginTop: "36px",
         }}>
-          {completed ? t("onboarding.complete") : t("onboarding.settingUp").split("\n").map((line, i) => <span key={i}>{i > 0 && <br />}{line}</span>)}
+          {completed ? en["onboarding.complete"] : en["onboarding.settingUp"].split("\n").map((line, i) => <span key={i}>{i > 0 && <br />}{line}</span>)}
         </p>
 
         {/* Steps */}
@@ -120,7 +119,7 @@ export default function OnboardingPage() {
             lineHeight: "18px",
             marginBottom: "16px",
           }}>
-            {t("onboarding.deposited", { amount: ACCOUNT.balance })}
+            {en["onboarding.deposited"].replace("{amount}", String(ACCOUNT.balance))}
           </p>
 
           <div style={{
@@ -157,7 +156,7 @@ export default function OnboardingPage() {
             }} />
 
             <p style={{ fontSize: "14px", color: "#666", lineHeight: "18px" }}>
-              {t("onboarding.balance")}
+              {en["onboarding.balance"]}
             </p>
             <p style={{
               fontSize: "28px",
@@ -196,7 +195,7 @@ export default function OnboardingPage() {
             cursor: "pointer",
           }}
         >
-          {t("onboarding.startTrading")}
+          {en["onboarding.startTrading"]}
         </button>
       </div>
     </div>
