@@ -50,8 +50,17 @@ const inputValue: CSSProperties = {
   padding: 0,
 };
 
-const Arrow = () => (
-  <svg width="6" height="4" viewBox="0 0 6 4" fill="none">
+const Arrow = ({ open = false }: { readonly open?: boolean }) => (
+  <svg
+    width="6"
+    height="4"
+    viewBox="0 0 6 4"
+    fill="none"
+    style={{
+      transition: "transform 0.15s ease-out",
+      transform: open ? "rotate(180deg)" : "rotate(0deg)",
+    }}
+  >
     <path d="M0.5 0.5L3 3.5L5.5 0.5" stroke="#9f9f9f" strokeWidth="0.8" />
   </svg>
 );
@@ -67,6 +76,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
   const [price, setPrice] = useState(state.selectedCoin.price.toString());
   const [size, setSize] = useState("0.001");
   const [sizePercent, setSizePercent] = useState(50);
+  const [orderTypeOpen, setOrderTypeOpen] = useState(false);
 
   useEffect(() => {
     if (state.prefillData) {
@@ -91,16 +101,48 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
 
   return (
     <div style={container}>
-      {/* Order type toggle */}
-      <div
-        style={{ ...dropdown, height: "28px", marginBottom: "4px" }}
-        onClick={() => dispatch({
-          type: "SET_ORDER_TYPE",
-          orderType: state.orderType === "market" ? "limit" : "market",
-        })}
-      >
-        <span>{state.orderType === "market" ? t("trade.market") : t("trade.limit")}</span>
-        <Arrow />
+      {/* Order type dropdown */}
+      <div style={{ position: "relative", marginBottom: "4px" }}>
+        <div
+          style={{ ...dropdown, height: "28px" }}
+          onClick={() => setOrderTypeOpen((prev) => !prev)}
+        >
+          <span>{state.orderType === "market" ? t("trade.market") : t("trade.limit")}</span>
+          <Arrow open={orderTypeOpen} />
+        </div>
+        {orderTypeOpen && (
+          <div style={{
+            position: "absolute",
+            top: "30px",
+            left: 0,
+            right: 0,
+            background: "#1d1d1d",
+            border: "1px solid #2c2c2c",
+            borderRadius: "4px",
+            zIndex: 10,
+            overflow: "hidden",
+          }}>
+            {(["market", "limit"] as const).map((type) => (
+              <div
+                key={type}
+                onClick={() => {
+                  dispatch({ type: "SET_ORDER_TYPE", orderType: type });
+                  setOrderTypeOpen(false);
+                }}
+                style={{
+                  padding: "8px 10px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: state.orderType === type ? "#fff" : "#9f9f9f",
+                  background: state.orderType === type ? "#2c2c2c" : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {type === "market" ? t("trade.market") : t("trade.limit")}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Isolated + Leverage row */}
