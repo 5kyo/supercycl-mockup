@@ -6,12 +6,13 @@ import type { CSSProperties } from "react";
 import { asset } from "../utils/asset";
 
 const page: CSSProperties = {
-  height: "100dvh",
+  minHeight: "100dvh",
   display: "flex",
   flexDirection: "column",
   background: "#050505",
   position: "relative",
-  overflow: "hidden",
+  overflowX: "hidden",
+  overflowY: "auto",
 };
 
 const bgImage: CSSProperties = {

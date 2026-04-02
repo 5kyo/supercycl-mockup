@@ -6,47 +6,29 @@ import en from "../i18n/en";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
-  height: "100dvh",
+  minHeight: "100dvh",
   display: "flex",
   flexDirection: "column",
   background: "#050505",
   position: "relative",
-  overflow: "hidden",
-};
-
-const orbArea: CSSProperties = {
-  position: "absolute",
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "320px",
-  height: "320px",
-  pointerEvents: "none",
-};
-
-const titleArea: CSSProperties = {
-  position: "absolute",
-  left: "20px",
-  top: "124px",
-  width: "320px",
-};
-
-const ctaArea: CSSProperties = {
-  position: "absolute",
-  left: "20px",
-  bottom: "60px",
-  width: "320px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "12px",
-  alignItems: "center",
+  overflowX: "hidden",
+  overflowY: "auto",
 };
 
 export default function LandingPage() {
   const navigate = useNavigate();
   return (
     <div style={page}>
-      <div style={orbArea}>
+      {/* Orb — centered background */}
+      <div style={{
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "320px",
+        height: "320px",
+        pointerEvents: "none",
+      }}>
         <PlasmaOrb />
       </div>
 
@@ -54,7 +36,8 @@ export default function LandingPage() {
         <Header />
       </div>
 
-      <div style={titleArea}>
+      {/* Title */}
+      <div style={{ padding: "68px 20px 0", position: "relative", zIndex: 1 }}>
         <h1 style={{
           fontSize: "34px",
           fontWeight: 500,
@@ -67,7 +50,19 @@ export default function LandingPage() {
         </h1>
       </div>
 
-      <div style={ctaArea}>
+      {/* Spacer */}
+      <div style={{ flex: 1 }} />
+
+      {/* CTA */}
+      <div style={{
+        padding: "0 20px 60px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "12px",
+        alignItems: "center",
+        position: "relative",
+        zIndex: 1,
+      }}>
         <button
           onClick={() => navigate("/login")}
           style={{

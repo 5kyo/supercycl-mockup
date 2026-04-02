@@ -7,11 +7,13 @@ import { useTranslation } from "../i18n";
 import type { CSSProperties } from "react";
 
 const page: CSSProperties = {
-  height: "100dvh",
+  minHeight: "100dvh",
   display: "flex",
   flexDirection: "column",
   background: "#050505",
   position: "relative",
+  overflowX: "hidden",
+  overflowY: "auto",
   animation: "fadeIn 0.3s ease-out",
 };
 
