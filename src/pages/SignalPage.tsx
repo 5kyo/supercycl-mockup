@@ -78,9 +78,9 @@ export default function SignalPage() {
   };
 
 
-  const handleSheetExecute = () => {
+  const handleSheetExecute = (orderType: "limit" | "market", leverage: number) => {
     if (!sheetSignal) return;
-    dispatch({ type: "EXECUTE_SIGNAL_ORDER", signalId: sheetSignal.id });
+    dispatch({ type: "EXECUTE_SIGNAL_ORDER", signalId: sheetSignal.id, orderType, leverage });
     dispatch({ type: "SHOW_TOAST", message: t("signal.orderExecuted") });
     setSheetSignal(null);
   };

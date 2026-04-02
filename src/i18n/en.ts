@@ -55,6 +55,7 @@ const en: Translations = {
   "trade.entry": "Entry",
   "trade.auto": "Auto",
   "trade.orderPlaced": "{label} {symbol} order placed{tpsl}",
+  "trade.orderCancelled": "Order cancelled",
 
   // orderbook
   "orderbook.price": "Price",

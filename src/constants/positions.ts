@@ -17,6 +17,17 @@ export interface Position {
   readonly isAuto: boolean;
 }
 
+export interface OpenOrder {
+  readonly id: string;
+  readonly coin: string;
+  readonly symbol: string;
+  readonly side: "Long" | "Short";
+  readonly limitPrice: number;
+  readonly size: number;
+  readonly leverage: number;
+  readonly createdAt: number;
+}
+
 export const DEFAULT_POSITIONS: readonly Position[] = [
   {
     id: "pos-1",

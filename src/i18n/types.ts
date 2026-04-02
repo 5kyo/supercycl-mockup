@@ -55,6 +55,7 @@ export interface Translations {
   readonly "trade.entry": string;
   readonly "trade.auto": string;
   readonly "trade.orderPlaced": string;
+  readonly "trade.orderCancelled": string;
 
   // orderbook
   readonly "orderbook.price": string;

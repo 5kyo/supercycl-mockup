@@ -55,6 +55,7 @@ const ko: Translations = {
   "trade.entry": "\uc9c4\uc785",
   "trade.auto": "\uc790\ub3d9",
   "trade.orderPlaced": "{label} {symbol} \uc8fc\ubb38 \uccb4\uacb0{tpsl}",
+  "trade.orderCancelled": "\uc8fc\ubb38\uc774 \ucde8\uc18c\ub418\uc5c8\uc2b5\ub2c8\ub2e4",
 
   // orderbook
   "orderbook.price": "\uac00\uaca9",

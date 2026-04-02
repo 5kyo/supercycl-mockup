@@ -85,7 +85,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
   }, [state.prefillData]);
 
   const handleOrder = (side: "Long" | "Short") => {
-    dispatch({ type: "PLACE_ORDER", side });
+    dispatch({ type: "PLACE_ORDER", side, orderType: state.orderType, limitPrice: Number(price), size: Number(size) });
     const label = side === "Long" ? t("trade.buyLong") : t("trade.sellShort");
     const tpslMsg = state.autoTpSlEnabled
       ? ` | Auto TP: +${state.takeProfitPercent}% / SL: -${state.stopLossPercent}%`

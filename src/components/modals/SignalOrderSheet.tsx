@@ -7,7 +7,7 @@ import type { CSSProperties } from "react";
 
 interface Props {
   readonly signal: Signal;
-  readonly onExecute: () => void;
+  readonly onExecute: (orderType: "limit" | "market", leverage: number) => void;
   readonly onModify: () => void;
   readonly onClose: () => void;
 }
@@ -37,6 +37,7 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
   const { t } = useTranslation();
   const isLong = signal.direction === "LONG";
   const [editing, setEditing] = useState(false);
+  const [orderType, setOrderType] = useState<"limit" | "market">("limit");
   const [leverage, setLeverage] = useState(signal.leverage);
   const [quantity, setQuantity] = useState(ACCOUNT.balance.toString());
 
@@ -70,7 +71,27 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
         <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-md)", padding: "12px 14px", marginBottom: "16px" }}>
           <div style={row}>
             <span style={{ color: "var(--text-tertiary)" }}>{t("signal.orderType")}</span>
-            <span>{t("trade.limit")}</span>
+            <div style={{ display: "flex", gap: "4px" }}>
+              {(["market", "limit"] as const).map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setOrderType(type)}
+                  style={{
+                    padding: "4px 10px",
+                    fontSize: "12px",
+                    fontWeight: orderType === type ? 600 : 400,
+                    borderRadius: "4px",
+                    background: orderType === type ? "#2c2c2c" : "transparent",
+                    color: orderType === type ? "#fff" : "var(--text-tertiary)",
+                    border: orderType === type ? "1px solid #505050" : "1px solid transparent",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-family)",
+                  }}
+                >
+                  {type === "market" ? t("trade.market") : t("trade.limit")}
+                </button>
+              ))}
+            </div>
           </div>
           <div style={row}>
             <span style={{ color: "var(--text-tertiary)" }}>{t("signal.entryPrice")}</span>
@@ -174,7 +195,7 @@ export default function SignalOrderSheet({ signal, onExecute, onModify: _onModif
             {editing ? t("signal.done") : t("signal.modify")}
           </button>
           <button
-            onClick={onExecute}
+            onClick={() => onExecute(orderType, leverage)}
             style={{
               flex: 2,
               padding: "14px",
