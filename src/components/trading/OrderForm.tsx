@@ -109,7 +109,7 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
           <span>{t("common.isolated")}</span>
         </div>
         <div style={{ ...dropdown, flex: "0 0 auto", height: "28px", minWidth: "68px" }} onClick={onLeverageTap}>
-          <span>{state.leverage}x(Max)</span>
+          <span>{state.leverage}x</span>
           <Arrow />
         </div>
       </div>
@@ -227,8 +227,8 @@ export default function OrderForm({ onLeverageTap, onTpSlEdit: _onTpSlEdit }: Pr
             background: "#ff5938",
             color: "#151515",
             borderRadius: "3px",
-            fontSize: "13px",
-            fontWeight: 500,
+            fontSize: "14px",
+            fontWeight: 600,
             fontFamily: "var(--font-family)",
             cursor: "pointer",
           }}

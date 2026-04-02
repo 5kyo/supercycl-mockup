@@ -32,8 +32,8 @@ export default function CoinInfoBar({ onCoinSelect }: Props) {
         <span style={{ fontSize: "16px", fontWeight: 700, lineHeight: "20px" }}>
           {coin.pair}
         </span>
-        <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
-          <path d="M1 1L4 4L7 1" stroke="#e0e0e0" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+          <path d="M1.5 1.5L5 4.5L8.5 1.5" stroke="#9f9f9f" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
