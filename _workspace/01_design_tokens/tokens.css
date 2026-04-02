@@ -1,0 +1,538 @@
+/* =============================================================================
+ * Supercycl Design Tokens — 3-Tier Structure
+ * Primitive → Semantic → Component
+ * Dark-only theme | 360px mobile trading app
+ * ============================================================================= */
+
+/* =============================================================================
+ * TIER 1: PRIMITIVE TOKENS
+ * Raw values — never referenced directly in components.
+ * Naming: --p-{category}-{scale}
+ * ============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+   * Primitive: Gray Scale (neutral palette, dark-first)
+   * ------------------------------------------------------------------------- */
+  --p-gray-50:  #050505;
+  --p-gray-100: #0a0a0a;
+  --p-gray-150: #111111;
+  --p-gray-200: #151515;
+  --p-gray-250: #1d1d1d;
+  --p-gray-300: #242424;
+  --p-gray-350: #2c2c2c;
+  --p-gray-400: #363636;
+  --p-gray-450: #444444;
+  --p-gray-500: #505050;
+  --p-gray-550: #5a5a5a;
+  --p-gray-600: #666666;
+  --p-gray-650: #7a7a7a;
+  --p-gray-700: #8e8e8e;
+  --p-gray-750: #9f9f9f;
+  --p-gray-800: #b3b3b3;
+  --p-gray-850: #cccccc;
+  --p-gray-900: #e0e0e0;
+  --p-gray-950: #ffffff;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Green Scale (brand primary / buy / profit)
+   * ------------------------------------------------------------------------- */
+  --p-green-50:  #021a00;
+  --p-green-100: #042d00;
+  --p-green-150: #064200;
+  --p-green-200: #092900;
+  --p-green-250: #0d5c00;
+  --p-green-300: #127400;
+  --p-green-400: #1a8c00;
+  --p-green-500: #00de0b;
+  --p-green-550: #00e830;
+  --p-green-600: #00ff6a;
+  --p-green-650: #37ff00;
+  --p-green-700: #55ff44;
+  --p-green-800: #88ff77;
+  --p-green-900: #bbffaa;
+  --p-green-950: #e0ffe0;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Red Scale (sell / danger / loss)
+   * ------------------------------------------------------------------------- */
+  --p-red-50:  #1a0800;
+  --p-red-100: #2d0e00;
+  --p-red-150: #421400;
+  --p-red-200: #5c1a00;
+  --p-red-300: #8c2a10;
+  --p-red-400: #b33a1c;
+  --p-red-500: #ff5938;
+  --p-red-600: #ff7a60;
+  --p-red-700: #ff9a88;
+  --p-red-800: #ffbbaa;
+  --p-red-900: #ffddd5;
+  --p-red-950: #fff0ec;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Yellow Scale (warning / caution)
+   * ------------------------------------------------------------------------- */
+  --p-yellow-50:  #1a1500;
+  --p-yellow-100: #332a00;
+  --p-yellow-200: #665400;
+  --p-yellow-300: #997f00;
+  --p-yellow-400: #cca800;
+  --p-yellow-500: #f0b90b;
+  --p-yellow-600: #f5cc40;
+  --p-yellow-700: #f8dd77;
+  --p-yellow-800: #fbeaaa;
+  --p-yellow-900: #fef5dd;
+  --p-yellow-950: #fffaee;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Blue Scale (info / link)
+   * ------------------------------------------------------------------------- */
+  --p-blue-50:  #0a1428;
+  --p-blue-100: #142850;
+  --p-blue-200: #1e3c78;
+  --p-blue-300: #2860b0;
+  --p-blue-400: #3272d4;
+  --p-blue-500: #4285f4;
+  --p-blue-600: #6aa0f8;
+  --p-blue-700: #92bbfa;
+  --p-blue-800: #b8d4fc;
+  --p-blue-900: #deebfe;
+  --p-blue-950: #f0f5ff;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Alpha (transparency)
+   * ------------------------------------------------------------------------- */
+  --p-alpha-black-60:  rgba(0, 0, 0, 0.6);
+  --p-alpha-black-70:  rgba(0, 0, 0, 0.7);
+  --p-alpha-black-80:  rgba(0, 0, 0, 0.8);
+  --p-alpha-white-5:   rgba(255, 255, 255, 0.05);
+  --p-alpha-white-10:  rgba(255, 255, 255, 0.1);
+  --p-alpha-white-20:  rgba(255, 255, 255, 0.2);
+  --p-alpha-green-30:  rgba(0, 255, 106, 0.3);
+  --p-alpha-green-60:  rgba(0, 255, 106, 0.6);
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Typography — Font Families
+   * ------------------------------------------------------------------------- */
+  --p-font-sans:  'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --p-font-mono:  'IBM Plex Sans', 'SF Mono', 'Menlo', monospace;
+  --p-font-kr:    'Noto Sans KR', 'IBM Plex Sans', sans-serif;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Typography — Font Sizes
+   * ------------------------------------------------------------------------- */
+  --p-font-size-2xs: 8px;
+  --p-font-size-xs:  9px;
+  --p-font-size-sm:  10px;
+  --p-font-size-md:  11px;
+  --p-font-size-base: 12px;
+  --p-font-size-lg:  13px;
+  --p-font-size-xl:  14px;
+  --p-font-size-2xl: 16px;
+  --p-font-size-3xl: 20px;
+  --p-font-size-4xl: 24px;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Typography — Line Heights
+   * ------------------------------------------------------------------------- */
+  --p-line-height-tight:  1.2;
+  --p-line-height-snug:   1.3;
+  --p-line-height-normal: 1.4;
+  --p-line-height-relaxed: 1.5;
+  --p-line-height-loose:  1.6;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Typography — Letter Spacing
+   * ------------------------------------------------------------------------- */
+  --p-letter-spacing-tight:  -0.02em;
+  --p-letter-spacing-normal:  0em;
+  --p-letter-spacing-wide:    0.02em;
+  --p-letter-spacing-wider:   0.04em;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Typography — Font Weights
+   * ------------------------------------------------------------------------- */
+  --p-font-weight-regular:  400;
+  --p-font-weight-medium:   500;
+  --p-font-weight-semibold: 600;
+  --p-font-weight-bold:     700;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Spacing (4px base grid)
+   * ------------------------------------------------------------------------- */
+  --p-space-0:   0px;
+  --p-space-0.5: 2px;
+  --p-space-1:   4px;
+  --p-space-1.5: 6px;
+  --p-space-2:   8px;
+  --p-space-2.5: 10px;
+  --p-space-3:   12px;
+  --p-space-3.5: 14px;
+  --p-space-4:   16px;
+  --p-space-4.5: 18px;
+  --p-space-5:   20px;
+  --p-space-6:   24px;
+  --p-space-7:   28px;
+  --p-space-8:   32px;
+  --p-space-10:  40px;
+  --p-space-12:  48px;
+  --p-space-16:  64px;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Border Radius
+   * ------------------------------------------------------------------------- */
+  --p-radius-xs:   2px;
+  --p-radius-sm:   4px;
+  --p-radius-md:   6px;
+  --p-radius-lg:   10px;
+  --p-radius-xl:   16px;
+  --p-radius-2xl:  20px;
+  --p-radius-3xl:  32px;
+  --p-radius-full: 9999px;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Shadows
+   * ------------------------------------------------------------------------- */
+  --p-shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.3);
+  --p-shadow-md:  0 2px 8px rgba(0, 0, 0, 0.4);
+  --p-shadow-lg:  0 4px 16px rgba(0, 0, 0, 0.5);
+  --p-shadow-xl:  0 8px 32px rgba(0, 0, 0, 0.6);
+  --p-shadow-glow-green: 0 0 8px var(--p-alpha-green-30);
+  --p-shadow-glow-green-strong: 0 0 20px var(--p-alpha-green-60);
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Motion — Durations
+   * ------------------------------------------------------------------------- */
+  --p-duration-instant:  0s;
+  --p-duration-fast:     0.15s;
+  --p-duration-normal:   0.2s;
+  --p-duration-moderate: 0.3s;
+  --p-duration-slow:     0.4s;
+  --p-duration-slower:   0.5s;
+  --p-duration-loading:  1s;
+  --p-duration-pulse:    1.5s;
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Motion — Easing
+   * ------------------------------------------------------------------------- */
+  --p-ease-out:     ease-out;
+  --p-ease-in-out:  ease-in-out;
+  --p-ease-linear:  linear;
+  --p-ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---------------------------------------------------------------------------
+   * Primitive: Z-Index
+   * ------------------------------------------------------------------------- */
+  --p-z-base:     0;
+  --p-z-raised:   10;
+  --p-z-nav:      50;
+  --p-z-overlay:  100;
+  --p-z-sheet:    101;
+  --p-z-toast:    200;
+  --p-z-max:      999;
+}
+
+
+/* =============================================================================
+ * TIER 2: SEMANTIC TOKENS
+ * Purpose-driven aliases — the primary API for component authors.
+ * Naming: --s-{category}-{purpose}[-modifier]
+ * ============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+   * Semantic: Surface (backgrounds)
+   * ------------------------------------------------------------------------- */
+  --s-surface-page:       var(--p-gray-50);
+  --s-surface-secondary:  var(--p-gray-50);
+  --s-surface-card:       var(--p-gray-300);
+  --s-surface-input:      var(--p-gray-250);
+  --s-surface-hover:      var(--p-gray-350);
+  --s-surface-elevated:   var(--p-gray-300);
+  --s-surface-overlay:    var(--p-alpha-black-70);
+  --s-surface-glassmorphic: var(--p-alpha-black-60);
+  --s-surface-tint-success: var(--p-green-200);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Text
+   * ------------------------------------------------------------------------- */
+  --s-text-primary:    var(--p-gray-950);
+  --s-text-secondary:  var(--p-gray-750);
+  --s-text-tertiary:   var(--p-gray-600);
+  --s-text-disabled:   var(--p-gray-500);
+  --s-text-inverse:    var(--p-gray-50);
+  --s-text-on-accent:  var(--p-gray-100);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Border
+   * ------------------------------------------------------------------------- */
+  --s-border-default:  var(--p-gray-350);
+  --s-border-subtle:   var(--p-gray-300);
+  --s-border-strong:   var(--p-gray-600);
+  --s-border-focus:    var(--p-green-500);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Interactive (brand / primary action)
+   * ------------------------------------------------------------------------- */
+  --s-interactive-primary:       var(--p-green-600);
+  --s-interactive-primary-alt:   var(--p-green-650);
+  --s-interactive-primary-muted: var(--p-green-500);
+  --s-interactive-secondary:     var(--p-gray-300);
+  --s-interactive-hover:         var(--p-gray-350);
+  --s-interactive-disabled:      var(--p-gray-500);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Feedback (status colors)
+   * ------------------------------------------------------------------------- */
+  --s-feedback-success:     var(--p-green-500);
+  --s-feedback-success-bg:  var(--p-green-200);
+  --s-feedback-error:       var(--p-red-500);
+  --s-feedback-error-bg:    var(--p-red-50);
+  --s-feedback-warning:     var(--p-yellow-500);
+  --s-feedback-warning-bg:  var(--p-yellow-50);
+  --s-feedback-info:        var(--p-blue-500);
+  --s-feedback-info-bg:     var(--p-blue-50);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Trading (domain-specific)
+   * ------------------------------------------------------------------------- */
+  --s-trading-buy:    var(--p-green-500);
+  --s-trading-sell:   var(--p-red-500);
+  --s-trading-profit: var(--p-green-500);
+  --s-trading-loss:   var(--p-red-500);
+  --s-trading-neutral: var(--p-gray-750);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Typography
+   * ------------------------------------------------------------------------- */
+  --s-font-family-default: var(--p-font-sans);
+  --s-font-family-display: var(--p-font-sans);
+  --s-font-family-mono:    var(--p-font-mono);
+  --s-font-family-kr:      var(--p-font-kr);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Motion
+   * ------------------------------------------------------------------------- */
+  --s-motion-fade:     var(--p-duration-moderate) var(--p-ease-out);
+  --s-motion-slide:    var(--p-duration-moderate) var(--p-ease-out);
+  --s-motion-scale:    var(--p-duration-normal)   var(--p-ease-out);
+  --s-motion-content:  var(--p-duration-slow)     var(--p-ease-out);
+  --s-motion-loading:  var(--p-duration-loading)  var(--p-ease-linear);
+  --s-motion-pulse:    var(--p-duration-pulse)    var(--p-ease-in-out);
+  --s-motion-success:  var(--p-duration-slow)     var(--p-ease-out);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Elevation
+   * ------------------------------------------------------------------------- */
+  --s-elevation-card:    var(--p-shadow-sm);
+  --s-elevation-modal:   var(--p-shadow-lg);
+  --s-elevation-sheet:   var(--p-shadow-xl);
+  --s-elevation-toast:   var(--p-shadow-md);
+  --s-elevation-glow:    var(--p-shadow-glow-green);
+
+  /* ---------------------------------------------------------------------------
+   * Semantic: Z-Index
+   * ------------------------------------------------------------------------- */
+  --s-z-base:    var(--p-z-base);
+  --s-z-nav:     var(--p-z-nav);
+  --s-z-overlay: var(--p-z-overlay);
+  --s-z-sheet:   var(--p-z-sheet);
+  --s-z-toast:   var(--p-z-toast);
+}
+
+
+/* =============================================================================
+ * TIER 3: COMPONENT TOKENS
+ * Component-specific overrides — for fine-grained control.
+ * Naming: --c-{component}-{property}[-variant][-state]
+ * ============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+   * Component: Button
+   * ------------------------------------------------------------------------- */
+  --c-button-bg-primary:    var(--s-surface-glassmorphic);
+  --c-button-bg-secondary:  var(--s-surface-card);
+  --c-button-bg-buy:        var(--s-trading-buy);
+  --c-button-bg-sell:       var(--s-trading-sell);
+  --c-button-bg-danger:     var(--s-feedback-error);
+  --c-button-bg-ghost:      transparent;
+  --c-button-text-primary:  var(--s-text-primary);
+  --c-button-text-buy:      #0a0a0a;
+  --c-button-text-sell:     #0a0a0a;
+  --c-button-border:        1px solid var(--s-border-strong);
+  --c-button-border-secondary: 1px solid var(--s-border-default);
+  --c-button-radius-pill:   var(--p-radius-3xl);
+  --c-button-radius-trade:  var(--p-radius-sm);
+  --c-button-padding:       var(--p-space-4.5) var(--p-space-6);
+  --c-button-padding-trade: var(--p-space-2.5) var(--p-space-4);
+  --c-button-font-size:     var(--p-font-size-2xl);
+  --c-button-font-weight:   var(--p-font-weight-medium);
+  --c-button-disabled-opacity: 0.4;
+
+  /* ---------------------------------------------------------------------------
+   * Component: Input
+   * ------------------------------------------------------------------------- */
+  --c-input-bg:           var(--s-surface-input);
+  --c-input-text:         var(--s-text-primary);
+  --c-input-label-color:  var(--s-text-secondary);
+  --c-input-label-size:   var(--p-font-size-2xs);
+  --c-input-value-size:   var(--p-font-size-base);
+  --c-input-border:       1px solid var(--s-border-default);
+  --c-input-border-focus: 1px solid var(--s-border-focus);
+  --c-input-radius:       var(--p-radius-xs);
+  --c-input-height:       30px;
+  --c-input-padding:      0 var(--p-space-2.5);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Card
+   * ------------------------------------------------------------------------- */
+  --c-card-bg:              var(--s-surface-card);
+  --c-card-radius:          var(--p-radius-sm);
+  --c-card-divider:         1px solid var(--s-border-default);
+  --c-card-indicator-width: 3px;
+  --c-card-padding:         var(--p-space-2.5) var(--p-space-3) var(--p-space-2.5) var(--p-space-3.5);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Modal
+   * ------------------------------------------------------------------------- */
+  --c-modal-backdrop:   var(--s-surface-overlay);
+  --c-modal-bg:         var(--s-surface-card);
+  --c-modal-radius:     var(--p-radius-xl);
+  --c-modal-padding:    var(--p-space-6);
+  --c-modal-z:          var(--s-z-overlay);
+  --c-modal-shadow:     var(--s-elevation-modal);
+  --c-modal-max-width:  360px;
+  --c-modal-title-size: var(--p-font-size-2xl);
+  --c-modal-title-weight: var(--p-font-weight-semibold);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Bottom Sheet
+   * ------------------------------------------------------------------------- */
+  --c-sheet-bg:           var(--s-surface-card);
+  --c-sheet-radius:       var(--p-radius-2xl) var(--p-radius-2xl) 0 0;
+  --c-sheet-padding:      var(--p-space-5);
+  --c-sheet-max-height:   70vh;
+  --c-sheet-z:            var(--s-z-sheet);
+  --c-sheet-shadow:       var(--s-elevation-sheet);
+  --c-sheet-handle-width: 40px;
+  --c-sheet-handle-height: 4px;
+
+  /* ---------------------------------------------------------------------------
+   * Component: Toast
+   * ------------------------------------------------------------------------- */
+  --c-toast-bg:         var(--s-surface-card);
+  --c-toast-border:     1px solid var(--s-border-default);
+  --c-toast-radius:     var(--p-radius-lg);
+  --c-toast-padding:    var(--p-space-3) var(--p-space-5);
+  --c-toast-max-width:  360px;
+  --c-toast-z:          var(--s-z-toast);
+  --c-toast-font-size:  var(--p-font-size-lg);
+  --c-toast-font-weight: var(--p-font-weight-medium);
+  --c-toast-bottom:     80px;
+  --c-toast-dismiss:    3000ms;
+
+  /* ---------------------------------------------------------------------------
+   * Component: Header
+   * ------------------------------------------------------------------------- */
+  --c-header-bg:      var(--s-surface-page);
+  --c-header-height:  56px;
+  --c-header-padding: var(--p-space-4.5) var(--p-space-5);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Bottom Nav
+   * ------------------------------------------------------------------------- */
+  --c-nav-bg:             var(--s-surface-page);
+  --c-nav-height:         50px;
+  --c-nav-border-top:     1px solid var(--s-border-subtle);
+  --c-nav-z:              var(--s-z-nav);
+  --c-nav-icon-active:    var(--s-text-primary);
+  --c-nav-icon-inactive:  var(--p-gray-650);
+  --c-nav-label-size:     var(--p-font-size-md);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Orderbook
+   * ------------------------------------------------------------------------- */
+  --c-orderbook-font-family: var(--s-font-family-default);
+  --c-orderbook-bid-color:   var(--s-trading-buy);
+  --c-orderbook-ask-color:   var(--s-trading-sell);
+  --c-orderbook-text:        var(--s-text-primary);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Position Card
+   * ------------------------------------------------------------------------- */
+  --c-position-bg:       var(--s-surface-card);
+  --c-position-padding:  var(--p-space-2.5) var(--p-space-3) var(--p-space-2.5) var(--p-space-3.5);
+  --c-position-long:     var(--s-trading-buy);
+  --c-position-short:    var(--s-trading-sell);
+
+  /* ---------------------------------------------------------------------------
+   * Component: Signal Card
+   * ------------------------------------------------------------------------- */
+  --c-signal-bg:           var(--s-surface-card);
+  --c-signal-border:       1px solid var(--s-border-default);
+  --c-signal-badge-size:   var(--p-font-size-xs);
+  --c-signal-badge-weight: var(--p-font-weight-semibold);
+}
+
+
+/* =============================================================================
+ * BACKWARDS COMPATIBILITY ALIASES
+ * Maps legacy global.css variable names → new semantic tokens.
+ * Allows incremental migration: existing code continues to work.
+ * ============================================================================= */
+
+:root {
+  /* Backgrounds */
+  --bg-primary:    var(--s-surface-page);
+  --bg-secondary:  var(--s-surface-secondary);
+  --bg-card:       var(--s-surface-card);
+  --bg-input:      var(--s-surface-input);
+  --bg-hover:      var(--s-surface-hover);
+  --bg-green-tint: var(--s-surface-tint-success);
+
+  /* Text */
+  --text-primary:   var(--s-text-primary);
+  --text-secondary: var(--s-text-secondary);
+  --text-tertiary:  var(--s-text-tertiary);
+
+  /* Accents */
+  --accent-green:  var(--s-trading-buy);
+  --accent-red:    var(--s-trading-sell);
+  --accent-yellow: var(--s-feedback-warning);
+  --accent-blue:   var(--s-feedback-info);
+
+  /* Primary Variants */
+  --color-pri-1: var(--s-interactive-primary);
+  --color-pri-2: var(--s-interactive-primary-alt);
+  --color-pri-3: var(--s-interactive-primary-muted);
+  --color-error: var(--s-feedback-error);
+
+  /* Gray Scale */
+  --gray-100: var(--p-gray-200);
+  --gray-250: var(--p-gray-250);
+  --gray-300: var(--p-gray-300);
+  --gray-400: var(--p-gray-350);
+  --gray-450: var(--p-gray-400);
+  --gray-500: var(--p-gray-500);
+  --gray-600: var(--p-gray-600);
+  --gray-800: var(--p-gray-900);
+
+  /* Borders */
+  --border-color: var(--s-border-default);
+  --border-light: var(--s-border-subtle);
+
+  /* Radius */
+  --radius-sm:   var(--p-radius-md);
+  --radius-md:   var(--p-radius-lg);
+  --radius-lg:   var(--p-radius-xl);
+  --radius-xl:   var(--p-radius-2xl);
+  --radius-full: var(--p-radius-full);
+
+  /* Font Families */
+  --font-display: var(--s-font-family-display);
+  --font-body:    var(--s-font-family-default);
+  --font-mono:    var(--s-font-family-mono);
+  --font-family:  var(--s-font-family-default);
+  --font-kr:      var(--s-font-family-kr);
+}
